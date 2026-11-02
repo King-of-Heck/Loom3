@@ -71,17 +71,40 @@ fn tool_card(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens, g: &'static c
     }
 }
 
-/// Draw the Home page with the welcome text, community card and recent documents.
+/// The Home page's main action: a solid accent button beside the heading.
+fn open_file_button(ui: &mut egui::Ui, t: &Tokens) -> egui::Response {
+    let galley = crate::bidi::layout_ui(ui, tl!("Open file").to_owned(), theme::semibold(14.0), egui::Color32::WHITE);
+    let (rect, resp) = ui.allocate_exact_size(vec2(galley.size().x + 66.0, 44.0), Sense::click());
+    resp.widget_info(|| egui::WidgetInfo::labeled(egui::Role::Button, true, tl!("Open file")));
+    let press = theme::Press::track(ui, &resp);
+    let fill = press.fill(t.accent, t.accent_text, t.accent.lerp_to_gamma(egui::Color32::BLACK, 0.22));
+    ui.painter().rect_filled(rect, CornerRadius::same(8), fill);
+    let body = rect.translate(press.offset());
+    icons::paint(ui, Rect::from_center_size(body.left_center() + vec2(28.0, 0.0), vec2(20.0, 20.0)), "folder-open", 19.0, egui::Color32::WHITE);
+    ui.painter().galley(body.left_center() + vec2(46.0, -galley.size().y / 2.0), galley, egui::Color32::WHITE);
+    theme::hand(resp)
+}
+
+/// Draw the Home page with the welcome text, Open file button and recent documents.
 pub fn show(app: &mut PdfCraftApp, ui: &mut egui::Ui) {
     let t = Tokens::get(ui.ctx());
     egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| {
         egui::Frame::NONE.inner_margin(egui::Margin { left: 36, right: 36, top: 28, bottom: 28 }).show(ui, |ui| {
-            ui.label(egui::RichText::new(tl!("Welcome to Loom")).font(theme::semibold(24.0)));
-            ui.label(
-                egui::RichText::new(tl!("An open-source PDF workbench — local, private, and scriptable."))
-                    .color(t.text_muted)
-                    .font(theme::regular(14.0)),
-            );
+            ui.horizontal(|ui| {
+                ui.vertical(|ui| {
+                    ui.label(egui::RichText::new(tl!("Welcome to Loom")).font(theme::semibold(24.0)));
+                    ui.label(
+                        egui::RichText::new(tl!("An open-source PDF workbench — local, private, and scriptable."))
+                            .color(t.text_muted)
+                            .font(theme::regular(14.0)),
+                    );
+                });
+                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                    if open_file_button(ui, &t).clicked() {
+                        app.open_dialog();
+                    }
+                });
+            });
             ui.add_space(14.0);
             egui::Frame::NONE
                 .fill(t.card)
@@ -100,23 +123,6 @@ pub fn show(app: &mut PdfCraftApp, ui: &mut egui::Ui) {
                             }
                             let Some(g) = catalog::group(id) else { continue };
                             tool_card(app, ui, &t, g, false);
-                        }
-                        let (rect, resp) = ui.allocate_exact_size(vec2(170.0, 104.0), Sense::click());
-                        resp.widget_info(|| egui::WidgetInfo::labeled(egui::Role::Button, true, tl!("Open file")));
-                        let press = theme::Press::track(ui, &resp);
-                        card_lift(ui, &t, rect, press);
-                        ui.painter().rect(
-                            rect,
-                            CornerRadius::same(10),
-                            press.fill(t.pasteboard, t.hover, t.pressed),
-                            Stroke::new(1.0, t.divider),
-                            egui::StrokeKind::Inside,
-                        );
-                        let body = rect.translate(press.offset());
-                        icons::paint(ui, Rect::from_center_size(body.center() - vec2(0.0, 16.0), vec2(28.0, 28.0)), "folder-open", 26.0, t.icon);
-                        ui.painter().text(body.center() + vec2(0.0, 22.0), Align2::CENTER_CENTER, tl!("Open file"), theme::semibold(13.0), t.text);
-                        if theme::hand(resp).clicked() {
-                            app.open_dialog();
                         }
                     });
                 });

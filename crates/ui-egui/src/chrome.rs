@@ -38,7 +38,7 @@ pub fn tab_strip(app: &mut PdfCraftApp, ui: &mut egui::Ui) {
     let (tab_h, button) = if mac { (MAC_TITLE_BAR - 2.0, 24.0) } else { (TAB_HEIGHT, STRIP_BUTTON) };
     egui::Panel::top("tab_strip")
         .exact_size(if mac { MAC_TITLE_BAR } else { TAB_STRIP })
-        .frame(egui::Frame::NONE.fill(t.titlebar).inner_margin(egui::Margin { left, right: 10, top: 0, bottom: 0 }))
+        .frame(egui::Frame::NONE.fill(t.titlebar).inner_margin(egui::Margin { left, right: if app.draws_window_frame() { 0 } else { 10 }, top: 0, bottom: 0 }))
         .show(ui, |ui| {
             let full = ui.max_rect();
             let drag = ui.interact(full, ui.scope_id().with("titledrag"), Sense::click_and_drag());
@@ -280,7 +280,7 @@ pub fn tab_strip(app: &mut PdfCraftApp, ui: &mut egui::Ui) {
                     if !controls.right.is_empty() {
                         // Laid out left to right inside the right-to-left run, so they read in
                         // the desktop's order.
-                        let size = egui::vec2(window_controls::width(&controls.right) - window_controls::SIDE_GAP, window_controls::BUTTON);
+                        let size = egui::vec2(window_controls::width(&controls.right) - window_controls::SIDE_GAP, window_controls::BUTTON_HEIGHT);
                         ui.allocate_ui_with_layout(size, Layout::left_to_right(Align::Center), |ui| {
                             ui.spacing_mut().item_spacing.x = 0.0;
                             window_controls::buttons(ui, &controls.right);

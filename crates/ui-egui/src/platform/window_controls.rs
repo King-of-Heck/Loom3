@@ -65,10 +65,12 @@ impl Layout {
     }
 }
 
-/// The round button's diameter, as in Adwaita.
-pub const BUTTON: f32 = 24.0;
-/// Between two window buttons.
-pub const GAP: f32 = 6.0;
+/// A button's width, as in Windows' own title bar.
+pub const BUTTON: f32 = 46.0;
+/// A button's height: the whole tab strip, so the buttons reach the window's top edge.
+pub const BUTTON_HEIGHT: f32 = 38.0;
+/// Between two window buttons: none, they sit side by side.
+pub const GAP: f32 = 0.0;
 /// Between the window buttons and the rest of the strip.
 pub const SIDE_GAP: f32 = 10.0;
 
@@ -95,7 +97,7 @@ pub fn buttons(ui: &mut egui::Ui, buttons: &[Button]) {
             Button::Maximize => tl!("Maximize"),
             Button::Close => tl!("Close"),
         };
-        let (rect, response) = ui.allocate_exact_size(Vec2::splat(BUTTON), Sense::click());
+        let (rect, response) = ui.allocate_exact_size(Vec2::new(BUTTON, BUTTON_HEIGHT), Sense::click());
         response.widget_info(|| egui::WidgetInfo::labeled(egui::Role::Button, true, label));
         let response = response.on_hover_text(label);
         if ui.is_rect_visible(rect) {
@@ -113,42 +115,47 @@ pub fn buttons(ui: &mut egui::Ui, buttons: &[Button]) {
     }
 }
 
-/// Adwaita's look: a round wash of the text colour, stronger on hover and press, and a 16-point
-/// symbolic glyph drawn with lines (no icon files).
+/// Windows' look: flat rectangles with thin line glyphs, a wash of the text colour on hover and
+/// press, and red behind Close (drawn with lines, no icon files).
 fn paint(painter: &egui::Painter, rect: Rect, button: Button, maximized: bool, t: &Tokens, response: &egui::Response) {
-    let alpha = if response.is_pointer_button_down_on() {
-        0.28
-    } else if response.hovered() {
-        0.16
-    } else {
-        0.10
+    let pressed = response.is_pointer_button_down_on();
+    let hovered = response.hovered();
+    let fill = match (button, pressed, hovered) {
+        (Button::Close, true, _) => Some(Color32::from_rgb(0xB2, 0x28, 0x1A)),
+        (Button::Close, false, true) => Some(Color32::from_rgb(0xC4, 0x2B, 0x1C)),
+        (_, true, _) => Some(t.text.gamma_multiply(0.18)),
+        (_, false, true) => Some(t.text.gamma_multiply(0.10)),
+        _ => None,
     };
-    painter.circle_filled(rect.center(), BUTTON / 2.0, t.text.gamma_multiply(alpha));
-    if response.has_focus() {
-        painter.circle_stroke(rect.center(), BUTTON / 2.0 - 0.5, Stroke::new(1.0, t.accent));
+    if let Some(fill) = fill {
+        painter.rect_filled(rect, 0.0, fill);
     }
-    let stroke = Stroke::new(1.25, t.text);
+    if response.has_focus() {
+        painter.rect_stroke(rect, 0.0, Stroke::new(1.0, t.accent), egui::StrokeKind::Inside);
+    }
+    let on_red = button == Button::Close && (pressed || hovered);
+    let stroke = Stroke::new(1.0, if on_red { Color32::WHITE } else { t.text });
     // The glyph's 16-point square, its corners on pixel centres so lines stay crisp.
     let c = rect.center();
     let at = |x: f32, y: f32| Pos2::new((c.x - 8.0 + x).round() + 0.5, (c.y - 8.0 + y).round() + 0.5);
     match button {
         Button::Minimize => {
-            painter.line_segment([at(4.0, 11.0), at(11.0, 11.0)], stroke);
+            painter.line_segment([at(3.0, 8.0), at(13.0, 8.0)], stroke);
         }
         Button::Maximize if maximized => {
             // Restore: a smaller window in front of another.
-            painter.rect_stroke(Rect::from_two_pos(at(4.0, 6.0), at(10.0, 12.0)), 1.0, stroke, egui::StrokeKind::Middle);
-            painter.line_segment([at(6.0, 6.0), at(6.0, 4.0)], stroke);
-            painter.line_segment([at(6.0, 4.0), at(12.0, 4.0)], stroke);
-            painter.line_segment([at(12.0, 4.0), at(12.0, 10.0)], stroke);
-            painter.line_segment([at(12.0, 10.0), at(10.0, 10.0)], stroke);
+            painter.rect_stroke(Rect::from_two_pos(at(3.0, 5.0), at(11.0, 13.0)), 1.0, stroke, egui::StrokeKind::Middle);
+            painter.line_segment([at(5.0, 5.0), at(5.0, 3.0)], stroke);
+            painter.line_segment([at(5.0, 3.0), at(13.0, 3.0)], stroke);
+            painter.line_segment([at(13.0, 3.0), at(13.0, 11.0)], stroke);
+            painter.line_segment([at(13.0, 11.0), at(11.0, 11.0)], stroke);
         }
         Button::Maximize => {
-            painter.rect_stroke(Rect::from_two_pos(at(4.0, 4.0), at(11.0, 11.0)), 1.0, stroke, egui::StrokeKind::Middle);
+            painter.rect_stroke(Rect::from_two_pos(at(3.0, 3.0), at(13.0, 13.0)), 1.0, stroke, egui::StrokeKind::Middle);
         }
         Button::Close => {
-            painter.line_segment([at(4.0, 4.0), at(11.0, 11.0)], stroke);
-            painter.line_segment([at(11.0, 4.0), at(4.0, 11.0)], stroke);
+            painter.line_segment([at(3.0, 3.0), at(13.0, 13.0)], stroke);
+            painter.line_segment([at(13.0, 3.0), at(3.0, 13.0)], stroke);
         }
     }
 }
