@@ -29,6 +29,9 @@ pub struct OcrSettings {
     /// that is read, so a scan with a few comments on it is still a scan. `false`: everything
     /// the page shows.
     pub native_text_only: bool,
+    /// Remove the document's hidden text first, so a bad text layer from a scanner or another
+    /// tool is replaced instead of making its pages count as having text. Visible text stays.
+    pub replace_hidden_text: bool,
 }
 
 /// A recognised word whose box is at least this much covered by the page's own text is that
@@ -56,7 +59,7 @@ fn covered(word: [f32; 4], text: &[[f32; 4]]) -> f32 {
 
 impl Default for OcrSettings {
     fn default() -> Self {
-        OcrSettings { dpi: 300.0, language: "en".into(), skip_text_pages: true, native_text_only: false }
+        OcrSettings { dpi: 300.0, language: "en".into(), skip_text_pages: true, native_text_only: false, replace_hidden_text: false }
     }
 }
 
@@ -196,6 +199,11 @@ impl Session {
         Some(OcrJob { bytes: doc.bytes.clone(), password: doc.password.clone(), infos: doc.info.pages.clone(), native, pages, settings })
     }
 
+    /// Remove the hidden text of the whole document, ahead of reading it again (one undoable step).
+    pub fn replace_hidden_text(&mut self, id: DocId) -> Result<(), EditError> {
+        self.apply(id, Edit::RemoveHidden { which: vec![crate::Hidden::HiddenText] }).map(|_| ())
+    }
+
     /// Add the words found by [`OcrJob::run`] as one undoable step. Returns the number of words.
     pub fn apply_ocr(&mut self, id: DocId, found: &[OcrPage]) -> Result<usize, EditError> {
         let edits: Vec<Edit> =
@@ -209,10 +217,13 @@ impl Session {
 
     /// Recognise text on `pages` and add it, in one call (the CLI and agents use this).
     pub fn recognize_text(&mut self, id: DocId, pages: &[usize], settings: OcrSettings) -> Result<Vec<OcrPage>, String> {
-        let job = self.ocr_job(id, pages, settings).ok_or("no such document")?;
         if let Some(why) = self.get(id).and_then(|d| d.read_only_reason.clone()) {
             return Err(why);
         }
+        if settings.replace_hidden_text {
+            self.replace_hidden_text(id).map_err(|e| e.to_string())?;
+        }
+        let job = self.ocr_job(id, pages, settings).ok_or("no such document")?;
         let ocr = engine()?;
         let found = job.run(&ocr, |_, _| true);
         self.apply_ocr(id, &found).map_err(|e| e.to_string())?;

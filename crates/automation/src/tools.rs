@@ -1262,6 +1262,7 @@ pub fn tools() -> Vec<ToolDef> {
                     "dpi": { "type": "number", "minimum": 72, "maximum": 600, "description": "Resolution pages are read at (default 300; a scanned page is read at most at its own resolution)." },
                     "language": { "type": "string", "enum": ["en"], "description": "Document language (default en)." },
                     "skip_text_pages": { "type": "boolean", "description": "Leave pages that already contain text alone (default true). false also reads pictures on such pages, without adding their text again." },
+                    "replace_hidden_text": { "type": "boolean", "description": "Remove the document's hidden text first, on every page, and read the pages again (default false). For a bad text layer from a scanner or another tool. Visible text stays." },
                 }),
                 &["doc"],
             )),

@@ -17,6 +17,9 @@ impl Automation {
         if let Some(s) = a.opt_bool("skip_text_pages")? {
             settings.skip_text_pages = s;
         }
+        if let Some(r) = a.opt_bool("replace_hidden_text")? {
+            settings.replace_hidden_text = r;
+        }
         Ok(settings)
     }
 

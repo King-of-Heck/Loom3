@@ -30,18 +30,26 @@ pub struct OcrDraft {
     pub dpi: u32,
     /// Also recognize pages that already have text (pictures on them; their text isn't added again).
     pub text_pages: bool,
+    /// Remove the document's hidden text first, so a bad text layer is replaced.
+    pub replace_hidden_text: bool,
 }
 
 impl Default for OcrDraft {
     fn default() -> Self {
-        OcrDraft { pages: OcrPages::All, from: 1, to: 1, language: "en".into(), dpi: 300, text_pages: false }
+        OcrDraft { pages: OcrPages::All, from: 1, to: 1, language: "en".into(), dpi: 300, text_pages: false, replace_hidden_text: false }
     }
 }
 
 impl OcrDraft {
     /// The recognition settings these choices make.
     pub fn settings(&self) -> OcrSettings {
-        OcrSettings { dpi: self.dpi as f32, language: self.language.clone(), skip_text_pages: !self.text_pages, ..Default::default() }
+        OcrSettings {
+            dpi: self.dpi as f32,
+            language: self.language.clone(),
+            skip_text_pages: !self.text_pages,
+            replace_hidden_text: self.replace_hidden_text,
+            ..Default::default()
+        }
     }
 }
 
@@ -145,12 +153,16 @@ pub(crate) fn body(ui: &mut egui::Ui, app: &mut PdfCraftApp, t: &Tokens) -> (boo
         ui.add_space(4.0);
         ui.add(crate::widgets::checkbox(&mut d.text_pages, tl!("Also recognize pages that already have text")))
             .on_hover_text(tl!("Pictures on those pages are recognized too; words already in the page's text are not added again"));
+        ui.add(crate::widgets::checkbox(&mut d.replace_hidden_text, tl!("Replace hidden text")))
+            .on_hover_text(tl!("Removes the hidden text of the whole document first, then reads the chosen pages again. Use it when a scan's text is wrong or unsearchable. Visible text stays."));
     });
     if !available {
         ui.label(
-            egui::RichText::new(tl!("Text recognition isn't installed: its model files are missing. Reinstall Loom, or set PDFCRAFT_MODELS to the folder that holds them."))
-                .small()
-                .color(t.text_muted),
+            egui::RichText::new(tl!(
+                "Text recognition isn't installed: its model files are missing. Reinstall Loom, or set PDFCRAFT_MODELS to the folder that holds them."
+            ))
+            .small()
+            .color(t.text_muted),
         );
         ui.add_space(6.0);
     }
@@ -188,6 +200,12 @@ impl PdfCraftApp {
             OcrPages::Range => (d.from.saturating_sub(1)..d.to).collect(),
         };
         let settings = d.settings();
+        if settings.replace_hidden_text
+            && let Err(e) = self.session.replace_hidden_text(id)
+        {
+            self.notify(e.to_string());
+            return;
+        }
         self.start_ocr_pages(id, &pages, settings, false);
     }
 

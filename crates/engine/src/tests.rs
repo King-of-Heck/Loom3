@@ -5091,6 +5091,14 @@ fn recognize_text_reads_the_euro_sign() {
     let text = page_texts(&s, id)[0].clone();
     // The model was trained with € where the ocrs crate's alphabet has a second E.
     assert!(text.contains("€250"), "{text}");
+
+    // Asking for the hidden text to be replaced reads the page again, without doubling its words.
+    let replace = ocr::OcrSettings { replace_hidden_text: true, ..Default::default() };
+    assert!(s.recognize_text(id, &[], ocr::OcrSettings::default()).unwrap()[0].skipped.is_some(), "the page now has text");
+    let again = s.recognize_text(id, &[], replace).unwrap();
+    assert!(again[0].skipped.is_none() && !again[0].words.is_empty(), "{again:?}");
+    let text = page_texts(&s, id)[0].clone();
+    assert_eq!(text.matches("Total").count(), 1, "{text}");
 }
 
 const SYNTHETIC_SCAN_DPI: f64 = 300.0;

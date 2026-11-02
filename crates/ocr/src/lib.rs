@@ -12,6 +12,8 @@
 
 use std::path::{Path, PathBuf};
 
+use rten_imageproc::{PointF, RotatedRect};
+
 pub use pdfcraft_fonts::helvetica_width;
 
 /// The model files, as named in ATTRIBUTION.toml.
@@ -134,17 +136,12 @@ impl Ocr {
         if width == 0 || height == 0 || pixels.is_empty() {
             return Err(OcrError::EmptyImage);
         }
-        // ocrs wants 1 or 3 channels.
-        let rgb: std::borrow::Cow<[u8]> = if pixels.len() == (width * height * 4) as usize {
-            pixels.as_chunks::<4>().0.iter().flat_map(|p| [p[0], p[1], p[2]]).collect::<Vec<u8>>().into()
-        } else {
-            pixels.into()
-        };
+        let grey = despeckle(grey_page(pixels, width, height), width as usize);
         let err = |e: &dyn std::fmt::Display| OcrError::Recognize(e.to_string());
-        let source = ocrs::ImageSource::from_bytes(&rgb, (width, height)).map_err(|e| err(&e))?;
-        let input = self.engine.prepare_input(source).map_err(|e| err(&e))?;
-        let found = self.engine.detect_words(&input).map_err(|e| err(&e))?;
-        let lines = self.engine.find_text_lines(&input, &found);
+        let input = self.prepare(&grey, width, height)?;
+        let words = self.find_words(&grey, &input, width, height)?;
+        // Lines and their reading order are worked out once, for the whole page.
+        let lines = self.engine.find_text_lines(&input, &words);
         let read = self.engine.recognize_text(&input, &lines).map_err(|e| err(&e))?;
         use ocrs::TextItem;
         Ok(read
@@ -163,6 +160,152 @@ impl Ocr {
             .filter(|l| !l.words.is_empty())
             .collect())
     }
+
+    fn prepare(&self, grey: &[u8], width: u32, height: u32) -> Result<ocrs::OcrInput, OcrError> {
+        let err = |e: &dyn std::fmt::Display| OcrError::Recognize(e.to_string());
+        let source = ocrs::ImageSource::from_bytes(grey, (width, height)).map_err(|e| err(&e))?;
+        self.engine.prepare_input(source).map_err(|e| err(&e))
+    }
+
+    /// The boxes of the page's words. The engine shrinks what it is given to one small size to find
+    /// them, which loses ordinary text on a whole page, so the page is searched in overlapping
+    /// bands. The whole page is searched too, for text too tall to fit in a band's overlap.
+    fn find_words(&self, grey: &[u8], page: &ocrs::OcrInput, width: u32, height: u32) -> Result<Vec<RotatedRect>, OcrError> {
+        let err = |e: &dyn std::fmt::Display| OcrError::Recognize(e.to_string());
+        let whole = self.engine.detect_words(page).map_err(|e| err(&e))?;
+        let plan = bands(height, width);
+        if plan.is_empty() {
+            return Ok(whole);
+        }
+        let tall_from = overlap(height) as f32 * 0.6;
+        let mut words: Vec<RotatedRect> = whole.into_iter().filter(|w| w.height() >= tall_from).collect();
+        let tall = words.len();
+        // The engine pads its boxes by a fixed amount at the size it searches. That is less of a
+        // band's word than of a whole page's, and a box too tight clips symbols such as €.
+        let margin = height as f32 / 1000.0;
+        let stride = width as usize;
+        for band in plan {
+            let Some(data) = grey.get(band.top as usize * stride..band.bottom as usize * stride) else { continue };
+            let input = self.prepare(data, width, band.bottom - band.top)?;
+            for word in self.engine.detect_words(&input).map_err(|e| err(&e))? {
+                let c = word.center();
+                let (x, y) = (c.x, c.y + band.top as f32);
+                if word.height() >= tall_from || !band.keeps(y) || words.iter().take(tall).any(|t| contains(t, x, y)) {
+                    continue;
+                }
+                // A word on the edge between two bands can be found by both.
+                if band.near_edge(y) && words.iter().any(|t| contains(t, x, y)) {
+                    continue;
+                }
+                words.push(RotatedRect::new(PointF::from_yx(y, x), word.up_axis(), word.width() + margin, word.height()));
+            }
+        }
+        Ok(words)
+    }
+}
+
+/// Whether the point is inside the box, taken as upright (words on a page are close to it).
+fn contains(word: &RotatedRect, x: f32, y: f32) -> bool {
+    let c = word.center();
+    (x - c.x).abs() <= word.width() / 2.0 && (y - c.y).abs() <= word.height() / 2.0
+}
+
+/// A page shorter than this is read whole: it isn't shrunk enough to lose text.
+const MIN_BANDED_HEIGHT: u32 = 1200;
+
+/// How many pixels neighbouring bands share. A line shorter than half of this is whole in the band
+/// that keeps it.
+fn overlap(height: u32) -> u32 {
+    height / 12
+}
+
+/// A horizontal slice of the page: the rows read, and the rows whose lines it keeps.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+struct Band {
+    top: u32,
+    bottom: u32,
+    own_top: u32,
+    own_bottom: u32,
+}
+
+/// The bands of a page, about four on a portrait sheet and fewer on a landscape one. The rows each
+/// band keeps cover the page exactly once.
+fn bands(height: u32, width: u32) -> Vec<Band> {
+    if height < MIN_BANDED_HEIGHT || width == 0 {
+        return Vec::new();
+    }
+    let count = ((height as f32 / width as f32 * 3.0).round() as u32).clamp(2, 8);
+    let half = overlap(height) / 2;
+    (0..count)
+        .map(|i| {
+            let own_top = height / count * i;
+            let own_bottom = if i + 1 == count { height } else { height / count * (i + 1) };
+            Band { top: own_top.saturating_sub(half), bottom: own_bottom.saturating_add(half).min(height), own_top, own_bottom }
+        })
+        .collect()
+}
+
+/// How far past its own rows a band still keeps a word, so that one found slightly differently by
+/// two bands is not missed by both.
+const EDGE_TOLERANCE: f32 = 8.0;
+
+impl Band {
+    fn keeps(&self, y: f32) -> bool {
+        y >= self.own_top as f32 - EDGE_TOLERANCE && y <= self.own_bottom as f32 + EDGE_TOLERANCE
+    }
+
+    fn near_edge(&self, y: f32) -> bool {
+        (y - self.own_top as f32).abs() <= EDGE_TOLERANCE * 2.0 || (y - self.own_bottom as f32).abs() <= EDGE_TOLERANCE * 2.0
+    }
+}
+
+/// `pixels` as one grey byte a pixel: RGBA and RGB by the usual luminance weights, anything else
+/// as given.
+fn grey_page(pixels: &[u8], width: u32, height: u32) -> Vec<u8> {
+    let luma = |r: u8, g: u8, b: u8| ((u32::from(r) * 299 + u32::from(g) * 587 + u32::from(b) * 114) / 1000) as u8;
+    let area = (width as usize).saturating_mul(height as usize);
+    if pixels.len() == area.saturating_mul(4) {
+        pixels.as_chunks::<4>().0.iter().map(|&[r, g, b, _]| luma(r, g, b)).collect()
+    } else if pixels.len() == area.saturating_mul(3) {
+        pixels.as_chunks::<3>().0.iter().map(|&[r, g, b]| luma(r, g, b)).collect()
+    } else {
+        pixels.to_vec()
+    }
+}
+
+/// A pixel this much darker or lighter than all eight of its neighbours is a speck.
+const SPECK_CONTRAST: i16 = 48;
+/// The share of a page that must be specks (1 in this many pixels) for it to count as speckled.
+const SPECKLED: usize = 1000;
+
+/// Remove scanner specks: each pixel becomes the middle value of its 3x3 neighbourhood. A page
+/// without specks is left alone, because the same filter wears away the thin strokes of small or
+/// low-resolution text. This changes only what is read, not the page's image.
+fn despeckle(grey: Vec<u8>, width: usize) -> Vec<u8> {
+    if width < 3 {
+        return grey;
+    }
+    let mut out = grey.clone();
+    let mut specks = 0usize;
+    let rows: Vec<&[u8]> = grey.chunks_exact(width).collect();
+    for (row, near) in out.chunks_exact_mut(width).skip(1).zip(rows.windows(3)) {
+        let &[a, b, c] = near else { continue };
+        for (px, ((x, y), z)) in row.iter_mut().skip(1).zip(a.windows(3).zip(b.windows(3)).zip(c.windows(3))) {
+            let mut v = [0u8; 9];
+            for (slot, value) in v.iter_mut().zip(x.iter().chain(y).chain(z)) {
+                *slot = *value;
+            }
+            let centre = i16::from(v[4]);
+            let around = v.iter().enumerate().filter(|(i, _)| *i != 4).map(|(_, n)| i16::from(*n));
+            let (low, high) = around.fold((i16::MAX, i16::MIN), |(l, h), n| (l.min(n), h.max(n)));
+            if centre + SPECK_CONTRAST < low || centre > high + SPECK_CONTRAST {
+                specks += 1;
+            }
+            let (_, middle, _) = v.select_nth_unstable(4);
+            *px = *middle;
+        }
+    }
+    if specks.saturating_mul(SPECKLED) > grey.len() { out } else { grey }
 }
 
 /// A word placed on a page, in PDF user space: the bottom-left corner of its box, and the
@@ -419,6 +562,74 @@ mod tests {
         // The euro sign follows the ASCII punctuation (class 44; 0 is the CTC blank), not a second E.
         assert_eq!(chars.iter().position(|&c| c == '€'), Some(43));
         assert_eq!(chars.iter().filter(|&&c| c == 'E').count(), 1);
+    }
+
+    #[test]
+    fn every_row_of_a_page_belongs_to_exactly_one_band() {
+        for (h, w) in [(3300, 2550), (2550, 3300), (1200, 900), (9000, 300), (u32::MAX / 2, 1)] {
+            let plan = bands(h, w);
+            assert!(plan.len() >= 2 && plan.len() <= 8, "{h}x{w}: {}", plan.len());
+            assert_eq!(plan.first().map(|b| b.own_top), Some(0));
+            assert_eq!(plan.last().map(|b| b.own_bottom), Some(h));
+            for pair in plan.windows(2) {
+                assert_eq!(pair[0].own_bottom, pair[1].own_top, "{h}x{w}");
+            }
+            for b in &plan {
+                assert!(b.top <= b.own_top && b.own_bottom <= b.bottom && b.bottom <= h, "{b:?}");
+            }
+        }
+    }
+
+    #[test]
+    fn a_word_on_the_edge_between_bands_is_kept_by_both_and_flagged() {
+        let plan = bands(3300, 2550);
+        let edge = plan[0].own_bottom as f32;
+        assert!(plan[0].keeps(edge - 1.0) && plan[0].keeps(edge + 1.0));
+        assert!(plan[1].keeps(edge - 1.0) && plan[1].keeps(edge + 1.0));
+        assert!(plan[1].near_edge(edge) && !plan[1].near_edge(edge + 200.0));
+        assert!(!plan[0].keeps(edge + 100.0), "well inside the next band is that band's");
+    }
+
+    #[test]
+    fn contains_is_the_upright_box() {
+        let word = RotatedRect::from_rect(rten_imageproc::RectF::from_tlbr(10.0, 20.0, 30.0, 60.0));
+        assert!(contains(&word, 40.0, 20.0));
+        assert!(!contains(&word, 61.0, 20.0) && !contains(&word, 40.0, 31.0));
+    }
+
+    #[test]
+    fn small_pages_and_empty_widths_are_read_whole() {
+        assert!(bands(800, 600).is_empty());
+        assert!(bands(3300, 0).is_empty());
+    }
+
+    #[test]
+    fn despeckle_removes_a_lone_dot_and_keeps_a_stroke() {
+        let mut page = vec![255u8; 25];
+        page[12] = 0;
+        assert!(despeckle(page, 5).iter().all(|&v| v == 255), "a speck goes");
+        let mut bar = vec![255u8; 25];
+        for x in 0..5 {
+            bar[5 + x] = 0;
+            bar[10 + x] = 0;
+            bar[15 + x] = 0;
+        }
+        assert_eq!(despeckle(bar, 5)[12], 0, "a stroke stays");
+        // A thin line on an otherwise clean page: a median filter would erase it.
+        let mut line = vec![255u8; 2500];
+        for row in line.chunks_exact_mut(50) {
+            row[25] = 0;
+        }
+        assert_eq!(despeckle(line.clone(), 50), line, "a page without specks is left alone");
+        assert_eq!(despeckle(vec![1, 2, 3], 1), [1, 2, 3], "too narrow to have neighbours");
+        assert_eq!(despeckle(vec![1, 2, 3, 4, 5], 3).len(), 5, "a short last row keeps its length");
+    }
+
+    #[test]
+    fn grey_page_reads_each_pixel_format() {
+        assert_eq!(grey_page(&[255, 255, 255, 255, 0, 0, 0, 255], 2, 1), [255, 0]);
+        assert_eq!(grey_page(&[255, 255, 255, 0, 0, 0], 2, 1), [255, 0]);
+        assert_eq!(grey_page(&[7, 9], 2, 1), [7, 9]);
     }
 
     #[test]
