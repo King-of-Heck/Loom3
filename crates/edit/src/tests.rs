@@ -3439,7 +3439,7 @@ fn paragraphs_are_found_and_rewrapped() {
     assert_eq!(blocks[0].lines, [0, 1, 2]);
     let width = blocks[0].rect[2] - blocks[0].rect[0];
     let next = blocks[1].rect;
-    let long = "PdfCraft rewraps a paragraph to its own width when its text changes, keeping the font, size, colour and line spacing.";
+    let long = "Loom rewraps a paragraph to its own width when its text changes, keeping the font, size, colour and line spacing.";
     assert_eq!(text::replace_block(&mut doc, 0, 0, long).unwrap().substituted, None);
     let doc = reopen(&doc);
     let lines = text::text_lines(&doc, 0).unwrap();

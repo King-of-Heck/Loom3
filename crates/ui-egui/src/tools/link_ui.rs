@@ -11,7 +11,7 @@ use crate::page_cursor::Layer;
 use crate::theme::{self, Tokens};
 use crate::{PdfCraftApp, widgets};
 
-const LINK_BLUE: Color32 = Color32::from_rgb(0x14, 0x73, 0xE6);
+const LINK_BLUE: Color32 = Color32::from_rgb(0xD9, 0x47, 0x12);
 
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LinkView {

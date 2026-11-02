@@ -1171,7 +1171,7 @@ fn a_stamp_without_an_appearance_draws_the_stamp_it_names() {
     // (restyling, flattening) still find nothing they may write.
     assert!(appearance::display_stamp(&stamp_dict("/Name /Draft /AP << /N 9 0 R >>")).is_none());
     assert!(appearance::build(&stamp_dict("/Name /Draft")).is_none());
-    assert!(appearance::display_stamp(&stamp_dict("/Name /Draft /PCStamp true")).is_none(), "PdfCraft's own stamps are drawn by `build`");
+    assert!(appearance::display_stamp(&stamp_dict("/Name /Draft /PCStamp true")).is_none(), "Loom's own stamps are drawn by `build`");
     assert!(appearance::display_stamp(&stamp_dict("/Name /Draft /Rect [5 5 5 50]")).is_none(), "no width");
 }
 

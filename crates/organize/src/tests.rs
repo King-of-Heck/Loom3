@@ -438,11 +438,11 @@ fn inserts_blank_page() {
 fn document_info_edits_round_trip_with_unicode() {
     let mut doc = open(fixture());
     set_info(&mut doc, "Title", "Résumé — 履歴書").unwrap();
-    set_info(&mut doc, "Author", "PdfCraft").unwrap();
+    set_info(&mut doc, "Author", "Loom").unwrap();
     set_info(&mut doc, "Producer", "").unwrap(); // clearing removes the key
     let doc = save_and_reopen(&doc);
     assert_eq!(info(&doc, "Title").as_deref(), Some("Résumé — 履歴書"));
-    assert_eq!(info(&doc, "Author").as_deref(), Some("PdfCraft"));
+    assert_eq!(info(&doc, "Author").as_deref(), Some("Loom"));
     assert_eq!(info(&doc, "Producer"), None);
 }
 

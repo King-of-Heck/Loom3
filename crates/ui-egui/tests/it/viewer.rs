@@ -991,7 +991,7 @@ fn tab_and_window_show_the_document_title_when_asked() {
     use pdfcraft_engine::Edit;
     let mut h = harness();
     h.run_steps(2);
-    assert_eq!(h.state().window_title, "b.pdf — PdfCraft");
+    assert_eq!(h.state().window_title, "b.pdf — Loom");
     {
         let s = h.state_mut();
         let id = s.views[s.active.unwrap()].id;
@@ -1002,7 +1002,7 @@ fn tab_and_window_show_the_document_title_when_asked() {
     }
     h.run_steps(2);
     // The edits are unsaved, so the title says so (#3640).
-    assert_eq!(h.state().window_title, "Quarterly report • — PdfCraft");
+    assert_eq!(h.state().window_title, "Quarterly report • — Loom");
     h.get_by_label_contains("Quarterly report");
 }
 
@@ -1011,14 +1011,14 @@ fn the_window_title_marks_unsaved_changes_until_saved() {
     use pdfcraft_engine::Edit;
     let mut h = harness();
     h.run_steps(2);
-    assert_eq!(h.state().window_title, "b.pdf — PdfCraft");
+    assert_eq!(h.state().window_title, "b.pdf — Loom");
     {
         let s = h.state_mut();
         let id = s.views[s.active.unwrap()].id;
         s.session.apply(id, Edit::SetInfo { key: "Subject".into(), value: "Budget".into() }).unwrap();
     }
     h.run_steps(2);
-    assert_eq!(h.state().window_title, "b.pdf • — PdfCraft", "unsaved changes (#3640)");
+    assert_eq!(h.state().window_title, "b.pdf • — Loom", "unsaved changes (#3640)");
     // Removed on drop, so a failing assert below doesn't leave it behind.
     struct Dir(std::path::PathBuf);
     impl Drop for Dir {
@@ -1034,7 +1034,7 @@ fn the_window_title_marks_unsaved_changes_until_saved() {
     h.run_steps(2);
     let s = h.state();
     assert!(!s.session.get(s.views[s.active.unwrap()].id).unwrap().dirty);
-    assert_eq!(s.window_title, "b.pdf — PdfCraft", "saved");
+    assert_eq!(s.window_title, "b.pdf — Loom", "saved");
 }
 
 /// #3640: text typed but not yet applied is unsaved work too, as closing the tab says, so the
@@ -1044,14 +1044,14 @@ fn the_window_title_marks_a_draft_that_is_not_applied_yet() {
     use pdfcraft_ui_egui::fill_sign::TypeBox;
     let mut h = harness();
     h.run_steps(2);
-    assert_eq!(h.state().window_title, "b.pdf — PdfCraft");
+    assert_eq!(h.state().window_title, "b.pdf — Loom");
     let i = h.state().active.unwrap();
     h.state_mut().views[i].fill_text = Some(TypeBox { page: 0, at: [40.0, 200.0], text: "Typed".into(), size: 10.0, color: [0.0; 3], focus: false });
     h.run_steps(2);
     let s = h.state();
     assert!(!s.session.get(s.views[i].id).unwrap().dirty, "nothing applied to the document yet");
-    assert_eq!(s.window_title, "b.pdf • — PdfCraft");
-    assert_eq!(s.page_title, "b.pdf • — PdfCraft");
+    assert_eq!(s.window_title, "b.pdf • — Loom");
+    assert_eq!(s.page_title, "b.pdf • — Loom");
 }
 
 /// #3640: a document that arrives while the window or browser tab is hidden, when eframe runs
@@ -1075,8 +1075,8 @@ fn a_document_opened_while_hidden_names_the_titles() {
     }
     let s = h.state();
     assert_eq!(s.views.len(), before + 1, "the document opened in logic");
-    assert_eq!(s.page_title, "arrived.pdf — PdfCraft");
-    assert_eq!(s.window_title, "arrived.pdf — PdfCraft");
+    assert_eq!(s.page_title, "arrived.pdf — Loom");
+    assert_eq!(s.window_title, "arrived.pdf — Loom");
 }
 
 /// #3640: a document that asks to show its own title shows it in the window, but the web page's
@@ -1094,8 +1094,8 @@ fn the_web_page_title_names_the_file_when_the_document_shows_its_title() {
         s.session.apply(id, Edit::SetInitialView(Box::new(v))).unwrap();
     }
     h.run_steps(2);
-    assert_eq!(h.state().window_title, "Budget 2026 • — PdfCraft");
-    assert_eq!(h.state().page_title, "b.pdf • — PdfCraft");
+    assert_eq!(h.state().window_title, "Budget 2026 • — Loom");
+    assert_eq!(h.state().page_title, "b.pdf • — Loom");
 }
 
 #[test]
@@ -1113,7 +1113,7 @@ fn a_placeholder_title_leaves_the_file_name_on_the_tab_and_window() {
         s.session.apply(id, Edit::SetInitialView(Box::new(v))).unwrap();
     }
     h.run_steps(2);
-    assert_eq!(h.state().window_title, "b.pdf • — PdfCraft");
+    assert_eq!(h.state().window_title, "b.pdf • — Loom");
     assert!(h.query_by_label_contains("about:blank").is_none());
 }
 
@@ -2374,7 +2374,7 @@ fn the_accessible_window_has_the_window_title_as_its_name() {
     let mut h = harness();
     h.run_steps(2);
     let name = |h: &Harness<'static, PdfCraftApp>| h.root().accesskit_node().label().map(|l| l.to_string());
-    assert_eq!(name(&h).as_deref(), Some("b.pdf — PdfCraft"));
+    assert_eq!(name(&h).as_deref(), Some("b.pdf — Loom"));
     {
         use pdfcraft_engine::Edit;
         let s = h.state_mut();
@@ -2386,6 +2386,6 @@ fn the_accessible_window_has_the_window_title_as_its_name() {
     }
     h.run_steps(2);
     // Unsaved, so it carries the window title's mark too (#3640).
-    assert_eq!(name(&h).as_deref(), Some("Quarterly report • — PdfCraft"));
+    assert_eq!(name(&h).as_deref(), Some("Quarterly report • — Loom"));
     assert_eq!(name(&h), Some(h.state().window_title.clone()));
 }

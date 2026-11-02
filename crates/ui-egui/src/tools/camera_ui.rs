@@ -16,7 +16,7 @@ const INSET: f32 = 0.05;
 const GRAB: f32 = 12.0;
 /// The slider's top.
 pub const MAX_LEVEL: u8 = pdfcraft_engine::camera_clean::MAX_LEVEL;
-const BLUE: Color32 = Color32::from_rgb(0x14, 0x73, 0xE6);
+const BLUE: Color32 = Color32::from_rgb(0xD9, 0x47, 0x12);
 
 /// The quadrilateral being placed: its page, its corners in view space (points, y down) and the
 /// corner being dragged.

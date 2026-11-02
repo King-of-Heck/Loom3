@@ -33,7 +33,7 @@ pub(crate) fn page_input(ui: &egui::Ui, resp: &egui::Response, xf: &PageXform, p
         let end = pointer.unwrap_or(start);
         let end = Pos2::new(end.x.clamp(xf.rect.left(), xf.rect.right()), end.y.clamp(xf.rect.top(), xf.rect.bottom()));
         let r = Rect::from_two_pos(start, end);
-        ui.painter().rect_stroke(r, CornerRadius::ZERO, Stroke::new(1.0, Color32::from_rgb(0x14, 0x73, 0xE6)), egui::StrokeKind::Middle);
+        ui.painter().rect_stroke(r, CornerRadius::ZERO, Stroke::new(1.0, Color32::from_rgb(0xD9, 0x47, 0x12)), egui::StrokeKind::Middle);
         if resp.drag_stopped() || !ptr.primary_down {
             view.marquee = None;
             let (a, b) = (xf.screen_to_view(r.left_top()), xf.screen_to_view(r.right_bottom()));

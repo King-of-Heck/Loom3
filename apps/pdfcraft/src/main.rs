@@ -49,7 +49,7 @@ mod text_scale;
 mod windows_manifest;
 
 /// Freedesktop app id: the `.desktop` file name and the hicolor icon name.
-const APP_ID: &str = "ai.storyteller.pdfcraft";
+const APP_ID: &str = "com.sandy.loom3";
 
 /// The app icon (assets/app-icon/README.md). macOS gets the version on Apple's icon grid, with a
 /// transparent margin; Windows and Linux get the full-bleed tile.
@@ -92,7 +92,7 @@ const LEGACY_STORAGE_KEY: &str = "printcraft";
 /// it is `PdfCraftData` beside the executable (#157). XDG desktops use the configuration base;
 /// other platforms retain eframe's PdfCraft folder. Logs and recovery stay in the data folder.
 fn settings_dir() -> Option<std::path::PathBuf> {
-    let legacy = eframe::storage_dir("PdfCraft");
+    let legacy = eframe::storage_dir("Loom3");
     match settings::directory(
         cfg!(all(unix, not(target_os = "macos"))),
         pdfcraft_ui_egui::portable::data_dir(),
@@ -116,11 +116,11 @@ fn migrate_legacy_folders() {
     if pdfcraft_ui_egui::portable::data_dir().is_some() {
         return;
     }
-    let mut moves = vec![(eframe::storage_dir("PrintCraft"), eframe::storage_dir("PdfCraft"))];
+    let mut moves = vec![(eframe::storage_dir("PrintCraft"), eframe::storage_dir("Loom3"))];
     // Recovery lives in the settings folder except on Windows, where it is under %LOCALAPPDATA%.
     if cfg!(windows) {
         let local = std::env::var_os("LOCALAPPDATA").filter(|v| !v.is_empty()).map(std::path::PathBuf::from);
-        moves.push((local.as_ref().map(|d| d.join("PrintCraft")), local.map(|d| d.join("PdfCraft"))));
+        moves.push((local.as_ref().map(|d| d.join("PrintCraft")), local.map(|d| d.join("Loom3"))));
     }
     for (old, new) in moves {
         let (Some(old), Some(new)) = (old, new) else { continue };
@@ -224,7 +224,7 @@ fn main() -> eframe::Result {
     }));
     let mut startup = startup::Arguments::parse(std::env::args().skip(1));
     if startup.version {
-        return print_and_exit(&format!("pdfcraft {}", pdfcraft_engine::build_info::version()));
+        return print_and_exit(&format!("loom {}", pdfcraft_engine::build_info::version()));
     }
     if startup.help {
         return print_and_exit(USAGE);
@@ -240,10 +240,10 @@ fn main() -> eframe::Result {
     // no file behind) and after the PrintCraft migration (which a fresh folder would block).
     // Records logged until now are written to it first.
     if let (Some(logger), Some(dir)) =
-        (logger, pdfcraft_ui_egui::portable::data_dir().map(std::path::Path::to_path_buf).or_else(|| eframe::storage_dir("PdfCraft")))
+        (logger, pdfcraft_ui_egui::portable::data_dir().map(std::path::Path::to_path_buf).or_else(|| eframe::storage_dir("Loom3")))
     {
         match logger.attach_dir(&dir.join("logs")) {
-            Ok(path) => log::info!("PdfCraft {}, log file {}", pdfcraft_engine::build_info::version(), path.display()),
+            Ok(path) => log::info!("Loom {}, log file {}", pdfcraft_engine::build_info::version(), path.display()),
             // Standard error only by now (`attach_dir` gave up on the file); unlike `eprintln!`, never panics.
             Err(e) => log::warn!("no log file: {e}"),
         }
@@ -270,7 +270,7 @@ fn main() -> eframe::Result {
     let started = Rc::new(Cell::new(false));
     let first = if choice == RendererChoice::Gl { eframe::Renderer::Glow } else { eframe::Renderer::Wgpu };
     let result = eframe::run_native(
-        "PdfCraft",
+        "Loom3",
         native_options(launch.integrated, launch.window_controls.is_some(), first),
         app_creator(
             launch.clone(),
@@ -288,7 +288,7 @@ fn main() -> eframe::Result {
             // usually still works there, so that's better than quitting.
             log::error!("the GPU renderer (wgpu) didn't start: {e}. Starting with OpenGL instead; set PDFCRAFT_RENDERER=gl to skip wgpu.");
             eframe::run_native(
-                "PdfCraft",
+                "Loom3",
                 native_options(launch.integrated, launch.window_controls.is_some(), eframe::Renderer::Glow),
                 app_creator(
                     launch,
@@ -331,7 +331,7 @@ fn retry_with_gl(choice: RendererChoice, app_started: bool) -> bool {
 /// The window and renderer settings for one run.
 fn native_options(integrated: bool, app_frame: bool, renderer: eframe::Renderer) -> eframe::NativeOptions {
     let mut viewport = egui::ViewportBuilder::default()
-        .with_title("PdfCraft")
+        .with_title("Loom")
         .with_inner_size([1440.0, 920.0])
         .with_min_inner_size([820.0, 520.0])
         .with_drag_and_drop(true)
@@ -415,7 +415,6 @@ fn app_creator<'a>(
         {
             app.motion.source = Some(motion::source());
         }
-        app.set_startup_update_check(true);
         app.printer_source = Some(pdfcraft_ui_egui::system_printers());
         app.os_key_store_ids = cfg!(any(target_os = "macos", target_os = "windows"));
         #[cfg(target_os = "macos")]
@@ -486,7 +485,7 @@ fn app_creator<'a>(
 /// `unsafe` calls.
 fn notify_software_renderer(app: &mut PdfCraftApp, device_type: eframe::wgpu::DeviceType) {
     if device_type == eframe::wgpu::DeviceType::Cpu {
-        app.notify_tr("PdfCraft is drawing without a graphics processor, so it may be slow. Updating the graphics driver may help.");
+        app.notify_tr("Loom is drawing without a graphics processor, so it may be slow. Updating the graphics driver may help.");
     }
 }
 

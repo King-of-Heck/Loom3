@@ -95,7 +95,7 @@ pub(super) fn validate_into(doc: &Document, bytes: &[u8], trust: &TrustStore, v:
     let unsupported = |info: &mut SignatureInfo, why: &str| {
         info.status = Status::Unknown;
         // What is not supported yet is named by the reader, in its own words.
-        info.details.push(Detail::of("PdfCraft can't check this signature yet: {}.", Fill::Reason(why.to_owned())));
+        info.details.push(Detail::of("Loom can't check this signature yet: {}.", Fill::Reason(why.to_owned())));
     };
     if info.sub_filter.as_deref() == Some("adbe.x509.rsa_sha1") {
         return validate_x509_rsa_sha1(SignatureValidation { doc, bytes, trust, info, cache }, v, (l0, o1, covered), &contents);
@@ -457,7 +457,7 @@ fn check_dss_revocation(doc: &Document, signer: Option<&Certificate>, at: &Optio
         None if cut => {
             info.details.push(Detail::of(
                 "The signature could not be checked ({}).",
-                Fill::Reason("the /DSS holds more revocation evidence than PdfCraft reads".into()),
+                Fill::Reason("the /DSS holds more revocation evidence than Loom reads".into()),
             ));
             DssRevocation::Incomplete
         }
@@ -637,7 +637,7 @@ fn validate_x509_rsa_sha1(context: SignatureValidation<'_>, v: &Dict, (l0, o1, c
             info.certificate = Some(cert);
             info.status = Status::Unknown;
             // What is not supported yet is named by the reader, in its own words.
-            info.details.push(Detail::of("PdfCraft can't check this signature yet: {}.", Fill::Reason(e.to_string())));
+            info.details.push(Detail::of("Loom can't check this signature yet: {}.", Fill::Reason(e.to_string())));
             return;
         }
         Err(e) => {

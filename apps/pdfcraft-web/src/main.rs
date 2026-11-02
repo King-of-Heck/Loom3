@@ -41,7 +41,7 @@ fn main() {
                                     }
                                 }
                                 Err(e) => {
-                                    eframe::web_sys::console::error_1(&format!("PdfCraft: could not fetch {url}: {e}").into());
+                                    eframe::web_sys::console::error_1(&format!("Loom: could not fetch {url}: {e}").into());
                                     // Shown in the app too, not only in the console (#173).
                                     if let Ok(mut q) = failed.lock() {
                                         q.push((name, e));
@@ -72,7 +72,7 @@ fn main() {
                         bridge.post_ready();
                     } else if query_param("host").as_deref() == Some("parent") {
                         eframe::web_sys::console::warn_1(
-                            &"PdfCraft: ?host=parent needs a framing page on the same origin; saves download instead".into(),
+                            &"Loom: ?host=parent needs a framing page on the same origin; saves download instead".into(),
                         );
                     }
                     Ok(Box::new(app))

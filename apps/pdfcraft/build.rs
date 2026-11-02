@@ -22,11 +22,11 @@ fn main() {
     res.set_icon("../../assets/app-icon/pdfcraft.ico")
         .set_icon_with_id("../../assets/app-icon/pdfcraft-document.ico", "2")
         .set_manifest(windows_manifest::WINDOWS_MANIFEST)
-        .set("ProductName", "PdfCraft")
-        .set("FileDescription", "PdfCraft PDF workbench")
+        .set("ProductName", "Loom")
+        .set("FileDescription", "Loom PDF workbench")
         .set("LegalCopyright", "Copyright (c) the PdfCraft contributors. MIT OR Apache-2.0.")
-        .set("OriginalFilename", "pdfcraft.exe")
-        .set("InternalName", "pdfcraft");
+        .set("OriginalFilename", "loom.exe")
+        .set("InternalName", "loom");
     if let Err(e) = res.compile() {
         if std::env::var_os("PDFCRAFT_REQUIRE_WINRES").is_some() {
             println!("cargo::error=embedding Windows resources failed: {e}");

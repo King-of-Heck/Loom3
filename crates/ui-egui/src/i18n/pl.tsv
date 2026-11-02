@@ -12,7 +12,7 @@
 # Clean-room: every entry was written from the plain meaning of the English label using ordinary
 # Polish computing vocabulary. No proprietary localisation resource, string table or product UI
 # (Acrobat's included) was consulted or copied; add entries the same way.
-# Product and technology names (PdfCraft, PDF, Acrobat JavaScript ...) stay in Latin letters;
+# Product and technology names (Loom, PDF, Acrobat JavaScript ...) stay in Latin letters;
 # the trailing "…" of dialog commands is kept.
 
 # Untranslated: English text until a translator fills these in.
@@ -165,7 +165,7 @@
 	Previous page	Poprzednia strona
 	Current page — type a page number or label (such as iv) and press Enter	Bieżąca strona — wpisz numer lub etykietę strony (np. iv) i naciśnij Enter
 	Zoom — type a percentage and press Enter	Powiększenie — wpisz wartość procentową i naciśnij Enter
-	Welcome to PdfCraft	Witamy w PdfCraft
+	Welcome to Loom	Witamy w Loom
 	An open-source PDF workbench — local, private, and scriptable.	Otwarty zestaw narzędzi do PDF — lokalny, prywatny i obsługujący skrypty.
 	Join the ArtCraft community	Dołącz do społeczności ArtCraft
 	Get help, share feedback and follow development on Discord.	Uzyskaj pomoc, podziel się opinią i śledź rozwój na Discordzie.
@@ -173,9 +173,9 @@
 	Use now	Użyj teraz
 	Open file	Otwórz plik
 	Recent	Ostatnie
-	Files you open in PdfCraft appear here. Drop a PDF anywhere to open it.	Pliki otwierane w PdfCraft pojawiają się tutaj. Upuść PDF w dowolnym miejscu, aby go otworzyć.
+	Files you open in Loom appear here. Drop a PDF anywhere to open it.	Pliki otwierane w Loom pojawiają się tutaj. Upuść PDF w dowolnym miejscu, aby go otworzyć.
 	Privacy	Prywatność
-	PdfCraft works offline. No telemetry, no account, and no cloud processing unless you add a provider.	PdfCraft działa offline. Bez telemetrii, konta i przetwarzania w chmurze, chyba że dodasz dostawcę.
+	Loom works offline. No telemetry, no account, and no cloud processing unless you add a provider.	Loom działa offline. Bez telemetrii, konta i przetwarzania w chmurze, chyba że dodasz dostawcę.
 	Scripts run in a sandbox without file or network access. With JavaScript off, Acrobat's standard format, validate and calculate functions still work.	Skrypty działają w piaskownicy bez dostępu do plików i sieci. Przy wyłączonym JavaScript standardowe funkcje formatowania, walidacji i obliczeń Acrobata nadal działają.
 	Back to all tools	Wróć do wszystkich narzędzi
 	Close panel	Zamknij panel
@@ -322,11 +322,11 @@
 	Number pages…	Ponumeruj strony…
 	Keyboard shortcuts	Skróty klawiaturowe
 	Join the ArtCraft Discord	Dołącz do Discorda ArtCraft
-	PdfCraft web page	Strona internetowa PdfCraft
-	PdfCraft on GitHub	PdfCraft na GitHubie
+	Loom web page	Strona internetowa Loom
+	Loom on GitHub	Loom na GitHubie
 	ArtCraft website	Strona internetowa ArtCraft
 	Check for updates…	Sprawdź aktualizacje…
-	About PdfCraft	O PdfCraft
+	About Loom	O Loom
 	Export a PDF	Eksportuj PDF
 	Export to	Eksportuj do
 	Microsoft Word (.docx)	Microsoft Word (.docx)
@@ -821,7 +821,7 @@
 	The image has been copied as a {ext} file	Obraz został skopiowany jako plik {ext}
 	The page has changed; select the image again	Strona się zmieniła; zaznacz obraz ponownie
 	No check has run yet.	Nie sprawdzono jeszcze aktualizacji.
-	PdfCraft {v} is available.	PdfCraft {v} jest dostępny.
+	Loom {v} is available.	Loom {v} jest dostępny.
 	You have version {c}. Download the new version from its release page.	Masz wersję {c}. Pobierz nową wersję ze strony wydania.
 	Asks GitHub for the latest release. Nothing is downloaded or installed automatically.	Sprawdza najnowsze wydanie na GitHubie. Nic nie jest pobierane ani instalowane automatycznie.
 	Download	Pobierz
@@ -947,8 +947,8 @@
 	No changes allowed	Zmiany niedozwolone
 	Annotations, form fill-in, and digital signatures	Adnotacje, wypełnianie formularzy i podpisy cyfrowe
 	Form fill-in and digital signatures	Wypełnianie formularzy i podpisy cyfrowe
-	The key is in the macOS Keychain, which may ask to allow PdfCraft to use it.	Klucz znajduje się w pęku kluczy macOS, który może poprosić o zgodę na jego użycie przez PdfCraft.
-	The key is in the Windows certificate store, which may ask to allow PdfCraft to use it.	Klucz znajduje się w magazynie certyfikatów Windows, który może poprosić o zgodę na jego użycie przez PdfCraft.
+	The key is in the macOS Keychain, which may ask to allow Loom to use it.	Klucz znajduje się w pęku kluczy macOS, który może poprosić o zgodę na jego użycie przez Loom.
+	The key is in the Windows certificate store, which may ask to allow Loom to use it.	Klucz znajduje się w magazynie certyfikatów Windows, który może poprosić o zgodę na jego użycie przez Loom.
 	Digital ID password	Hasło identyfikatora cyfrowego
 	Back	Wstecz
 	Validate all	Zweryfikuj wszystkie
@@ -1302,7 +1302,7 @@
 	Downsample to	Zmniejsz rozdzielczość do
 	Also recognize pages that already have text	Rozpoznaj także strony, które zawierają już tekst
 	Pictures on those pages are recognized too; words already in the page's text are not added again	Obrazy na tych stronach też są rozpoznawane; słowa, które już są w tekście strony, nie są dodawane ponownie
-	Text recognition isn't installed: its model files are missing. Reinstall PdfCraft, or set PDFCRAFT_MODELS to the folder that holds them.	Rozpoznawanie tekstu nie jest zainstalowane: brakuje plików modeli. Zainstaluj PdfCraft ponownie lub ustaw PDFCRAFT_MODELS na folder zawierający te pliki.
+	Text recognition isn't installed: its model files are missing. Reinstall Loom, or set PDFCRAFT_MODELS to the folder that holds them.	Rozpoznawanie tekstu nie jest zainstalowane: brakuje plików modeli. Zainstaluj Loom ponownie lub ustaw PDFCRAFT_MODELS na folder zawierający te pliki.
 	Settings	Ustawienia
 	Optional	Opcjonalne
 	Planned · {m}	Planowane · {m}
@@ -1451,7 +1451,7 @@
 	Anyone opening the document will need this password. It's applied when you save.	Każda osoba otwierająca dokument będzie potrzebować tego hasła. Zostanie zastosowane przy zapisie.
 	The document opens without a password; this password is needed to change the restrictions. It's applied when you save.	Dokument otwiera się bez hasła; to hasło jest potrzebne do zmiany ograniczeń. Zostanie zastosowane przy zapisie.
 	Recover unsaved documents?	Odzyskać niezapisane dokumenty?
-	PdfCraft didn't shut down normally. These documents had changes that were autosaved:	PdfCraft nie został zamknięty prawidłowo. Automatycznie zapisano zmiany w tych dokumentach:
+	Loom didn't shut down normally. These documents had changes that were autosaved:	Loom nie został zamknięty prawidłowo. Automatycznie zapisano zmiany w tych dokumentach:
 	just now	przed chwilą
 	{n} min ago	{n} min temu
 	{n} h ago	{n} godz. temu
@@ -1610,10 +1610,10 @@
 	On the web, open or drop an image to convert it	W wersji internetowej otwórz lub upuść obraz, aby go przekonwertować
 	Couldn't optimize the file: {e}	Nie można zoptymalizować pliku: {e}
 	Couldn't write {path}: {e}	Nie można zapisać {path}: {e}
-	The form asks to be submitted to {u}; PdfCraft doesn't send form data. Save the document to keep your entries.	Formularz wymaga wysłania do {u}; PdfCraft nie wysyła danych formularza. Zapisz dokument, aby zachować wpisane dane.
+	The form asks to be submitted to {u}; Loom doesn't send form data. Save the document to keep your entries.	Formularz wymaga wysłania do {u}; Loom nie wysyła danych formularza. Zapisz dokument, aby zachować wpisane dane.
 	This PDF uses the unsupported {s} action.	Ten PDF używa nieobsługiwanej akcji {s}.
 	{name}: the {other} action isn't supported yet	{name}: akcja {other} nie jest jeszcze obsługiwana
-	{name} submits the form to {url}; PdfCraft doesn't send form data. Save the document to keep your entries.	{name} wysyła formularz do {url}; PdfCraft nie wysyła danych formularza. Zapisz dokument, aby zachować wpisane dane.
+	{name} submits the form to {url}; Loom doesn't send form data. Save the document to keep your entries.	{name} wysyła formularz do {url}; Loom nie wysyła danych formularza. Zapisz dokument, aby zachować wpisane dane.
 	Export stopped: {e}	Eksport zatrzymany: {e}
 	Exported 1 image	Wyeksportowano 1 obraz
 	Exported {n} images	Liczba wyeksportowanych obrazów: {n}
@@ -1779,7 +1779,7 @@
 	Couldn't open {name}: {e}	Nie można otworzyć {name}: {e}
 	Couldn't read {name}: {e}	Nie można odczytać {name}: {e}
 	Portable mode is off: {folder} can't be written ({error}). Settings are kept in your user folder instead.	Tryb przenośny jest wyłączony: nie można zapisywać w {folder} ({error}). Ustawienia są przechowywane w folderze użytkownika.
-	PdfCraft is drawing without a graphics processor, so it may be slow. Updating the graphics driver may help.	PdfCraft renderuje bez procesora graficznego, więc może działać wolno. Aktualizacja sterownika graficznego może pomóc.
+	Loom is drawing without a graphics processor, so it may be slow. Updating the graphics driver may help.	Loom renderuje bez procesora graficznego, więc może działać wolno. Aktualizacja sterownika graficznego może pomóc.
 	Couldn't save: {e}	Nie można zapisać: {e}
 	Downloading attachments on the web arrives with M3.10 ({n} bytes ready)	Pobieranie załączników w wersji internetowej będzie dostępne w M3.10 (gotowe bajty: {n})
 	`{command}` {when}	`{command}` {when}
@@ -1853,8 +1853,8 @@
 	Signed and all signatures are valid.	Dokument jest podpisany i wszystkie podpisy są prawidłowe.
 	At least one signature has problems.	Co najmniej jeden podpis ma problemy.
 	This document is secured. Some changes are restricted by its security settings.	Ten dokument jest zabezpieczony. Niektóre zmiany są ograniczone ustawieniami zabezpieczeń.
-	This is a dynamic XFA form, which PdfCraft can't display yet. What you see is the file's placeholder page.	To dynamiczny formularz XFA, którego PdfCraft nie potrafi jeszcze wyświetlić. Widzisz stronę zastępczą pliku.
-	This form also contains XFA data, which PdfCraft doesn't read yet. You can fill its fields, but Acrobat may show the XFA values instead.	Ten formularz zawiera również dane XFA, których PdfCraft jeszcze nie odczytuje. Możesz wypełniać jego pola, ale Acrobat może zamiast nich wyświetlać wartości XFA.
+	This is a dynamic XFA form, which Loom can't display yet. What you see is the file's placeholder page.	To dynamiczny formularz XFA, którego Loom nie potrafi jeszcze wyświetlić. Widzisz stronę zastępczą pliku.
+	This form also contains XFA data, which Loom doesn't read yet. You can fill its fields, but Acrobat may show the XFA values instead.	Ten formularz zawiera również dane XFA, których Loom jeszcze nie odczytuje. Możesz wypełniać jego pola, ale Acrobat może zamiast nich wyświetlać wartości XFA.
 	This document contains {n} interactive form fields.	Ten dokument zawiera interaktywne pola formularza w liczbie {n}.
 	This file was damaged and has been repaired. Saving keeps the repaired version.	Ten plik był uszkodzony i został naprawiony. Zapis zachowa naprawioną wersję.
 	Dismiss	Zamknij komunikat
@@ -1903,7 +1903,7 @@
 	there are no pages to print	brak stron do wydrukowania
 	the document has no tags	dokument nie ma tagów
 	{0}: {1}	{0}: {1}
-	the text recognition models are not installed (reinstall PdfCraft, or set PDFCRAFT_MODELS to the folder that holds them)	modele rozpoznawania tekstu nie są zainstalowane (zainstaluj PdfCraft ponownie lub ustaw PDFCRAFT_MODELS na folder zawierający modele)
+	the text recognition models are not installed (reinstall Loom, or set PDFCRAFT_MODELS to the folder that holds them)	modele rozpoznawania tekstu nie są zainstalowane (zainstaluj Loom ponownie lub ustaw PDFCRAFT_MODELS na folder zawierający modele)
 	the image is empty	obraz jest pusty
 	this file isn't XFDF, FDF, XML or text form data	ten plik nie zawiera danych formularza XFDF, FDF, XML ani tekstowych
 	nothing in the file matches this document	żadne dane w pliku nie pasują do tego dokumentu
@@ -2114,12 +2114,12 @@
 	Choose a PNG or JPEG image (up to 4 MiB). Transparency is preserved.	Wybierz obraz PNG lub JPEG (do 4 MiB). Przezroczystość zostanie zachowana.
 	Couldn't import the signature image: {e}	Nie można zaimportować obrazu podpisu: {e}
 	Go to page…	Przejdź do strony…
-	Reopen the files that were open when PdfCraft last closed	Otwórz ponownie pliki otwarte przy ostatnim zamknięciu PdfCraft
+	Reopen the files that were open when Loom last closed	Otwórz ponownie pliki otwarte przy ostatnim zamknięciu Loom
 	Restore the last view (page, zoom and page display) when a document is opened again	Przywracaj ostatni widok (stronę, powiększenie i układ stron) przy ponownym otwarciu dokumentu
 	The PDF text fonts can't draw “{c}” ({code}). Choose supported text.	Czcionki tekstu PDF nie obsługują znaku „{c}” ({code}). Wybierz obsługiwany tekst.
 	The standard fonts can't draw “{c}” ({code}). Only Western European characters can be added as text for now.	Standardowe czcionki nie obsługują znaku „{c}” ({code}). Na razie można dodawać tylko tekst ze znakami zachodnioeuropejskimi.
-	This field's font can't draw “{c}” ({code}), so PdfCraft shows ? in its place. The value is saved, and other PDF viewers redraw the field from it.	Czcionka tego pola nie obsługuje znaku „{c}” ({code}), więc PdfCraft wyświetla w jego miejscu ?. Wartość została zapisana, a inne przeglądarki PDF odrysują pole na jej podstawie.
-	The fonts PdfCraft writes with can't draw “{c}” ({code}), so it shows as ? in every PDF viewer. The text is saved.	Czcionki, którymi pisze PdfCraft, nie obsługują znaku „{c}” ({code}), więc w każdej przeglądarce PDF w jego miejscu widać ?. Tekst został zapisany.
+	This field's font can't draw “{c}” ({code}), so Loom shows ? in its place. The value is saved, and other PDF viewers redraw the field from it.	Czcionka tego pola nie obsługuje znaku „{c}” ({code}), więc Loom wyświetla w jego miejscu ?. Wartość została zapisana, a inne przeglądarki PDF odrysują pole na jej podstawie.
+	The fonts Loom writes with can't draw “{c}” ({code}), so it shows as ? in every PDF viewer. The text is saved.	Czcionki, którymi pisze Loom, nie obsługują znaku „{c}” ({code}), więc w każdej przeglądarce PDF w jego miejscu widać ?. Tekst został zapisany.
 	Open arrow	Otwarta strzałka
 	Closed arrow	Zamknięta strzałka
 	Butt	Poprzeczna kreska
@@ -2237,8 +2237,8 @@
 	Write this email?	Napisać tę wiadomość e-mail?
 	XFA form: its fields and its XFA data are kept in step, so other viewers show what you fill in.	Formularz XFA: pola i dane XFA są synchronizowane, aby inne przeglądarki wyświetlały wpisane wartości.
 	{n} contributors · {c} commits	Współtwórców: {n} · Commitów: {c}
-	{who} in this document tried to open an address PdfCraft won't open: {e}.	Element „{who}” w tym dokumencie próbował otworzyć adres, którego PdfCraft nie otworzy: {e}.
-	{who} in this document tried to open an address PdfCraft won't open: {e}. Only web (http, https) and email (mailto) links open from documents.	Element „{who}” w tym dokumencie próbował otworzyć adres, którego PdfCraft nie otworzy: {e}. Z dokumentów otwierane są tylko łącza internetowe (http, https) i pocztowe (mailto).
+	{who} in this document tried to open an address Loom won't open: {e}.	Element „{who}” w tym dokumencie próbował otworzyć adres, którego Loom nie otworzy: {e}.
+	{who} in this document tried to open an address Loom won't open: {e}. Only web (http, https) and email (mailto) links open from documents.	Element „{who}” w tym dokumencie próbował otworzyć adres, którego Loom nie otworzy: {e}. Z dokumentów otwierane są tylko łącza internetowe (http, https) i pocztowe (mailto).
 	{who} in this document wants to open this address in your browser:	Element „{who}” w tym dokumencie chce otworzyć ten adres w przeglądarce:
 	{who} in this document wants to open your email app with this address:	Element „{who}” w tym dokumencie chce otworzyć aplikację pocztową z tym adresem:
 	ΔLOC	ΔLOC
@@ -2395,7 +2395,7 @@ animation effects	Off	Wyłączone
 @plural	{fields} builds some field names as it runs, so those reads aren't checked.|{fields} build some field names as they run, so those reads aren't checked.	{fields} tworzy część nazw pól w trakcie działania, więc te odczyty nie są sprawdzane.|{fields} tworzą część nazw pól w trakcie działania, więc te odczyty nie są sprawdzane.|{fields} tworzą część nazw pól w trakcie działania, więc te odczyty nie są sprawdzane.
 @plural	{fields} is missing|{fields} are missing	Brak {fields}|Brak {fields}|Brak {fields}
 	Scan	Skanuj
-	Sign a sheet of white paper and take a photo of it in bright, even light (use the flash). Choose the photo or drop it here: PdfCraft finds the signature and removes the paper.	Podpisz się na białej kartce i zrób jej zdjęcie przy jasnym, równomiernym świetle (użyj lampy błyskowej). Wybierz zdjęcie lub upuść je tutaj: PdfCraft znajdzie podpis i usunie papier.
+	Sign a sheet of white paper and take a photo of it in bright, even light (use the flash). Choose the photo or drop it here: Loom finds the signature and removes the paper.	Podpisz się na białej kartce i zrób jej zdjęcie przy jasnym, równomiernym świetle (użyj lampy błyskowej). Wybierz zdjęcie lub upuść je tutaj: Loom znajdzie podpis i usunie papier.
 	Choose photo…	Wybierz zdjęcie…
 	No photo chosen	Nie wybrano zdjęcia
 	Photo	Zdjęcie
@@ -2550,7 +2550,7 @@ animation effects	Off	Wyłączone
 	The signature's byte range does not exclude exactly its contents.	Zakres bajtów podpisu nie pomija dokładnie jego zawartości.
 	The signature contents are not hexadecimal.	Zawartość podpisu nie jest zapisana szesnastkowo.
 	The signature could not be read ({}).	Nie udało się odczytać podpisu ({}).
-	PdfCraft can't check this signature yet: {}.	PdfCraft nie potrafi jeszcze sprawdzić tego podpisu: {}.
+	Loom can't check this signature yet: {}.	Loom nie potrafi jeszcze sprawdzić tego podpisu: {}.
 	The signature uses the legacy adbe.x509.rsa_sha1 format.	Podpis używa przestarzałego formatu adbe.x509.rsa_sha1.
 	The signature is BER-encoded (indefinite lengths) rather than DER; it was read leniently.	Podpis jest zakodowany w BER (długości nieokreślone), a nie w DER; odczytano go z tolerancją.
 	The signed content is a constructed (segmented) OCTET STRING, as BER allows; it was read anyway.	Podpisana treść jest złożonym (segmentowanym) OCTET STRING, na co pozwala BER; mimo to ją odczytano.
@@ -2572,9 +2572,9 @@ animation effects	Off	Wyłączone
 	The signer's certificate was not valid at the time of signing.	Certyfikat podpisującego nie był ważny w chwili podpisania.
 	The signer's certificate does not allow digital signatures (its key usage has neither digital signature nor non-repudiation).	Certyfikat podpisującego nie pozwala na podpisy cyfrowe (jego użycie klucza nie obejmuje ani podpisu cyfrowego, ani niezaprzeczalności).
 	The signer's certificate is not issued for signing documents (its extended key usage has no document-signing purpose).	Certyfikat podpisującego nie jest wystawiony do podpisywania dokumentów (jego rozszerzone użycie klucza nie obejmuje podpisywania dokumentów).
-	The signer's certificate has critical extensions PdfCraft does not recognize ({}).	Certyfikat podpisującego ma rozszerzenia krytyczne, których PdfCraft nie rozpoznaje ({}).
+	The signer's certificate has critical extensions Loom does not recognize ({}).	Certyfikat podpisującego ma rozszerzenia krytyczne, których Loom nie rozpoznaje ({}).
 	The certificate of {} is not a CA certificate that may issue certificates, so it is not used to vouch for {}.	Certyfikat podmiotu {} nie jest certyfikatem urzędu certyfikacji, który może wystawiać certyfikaty, dlatego nie poświadcza certyfikatu {}.
-	The certificate of {} has critical extensions PdfCraft does not recognize, so it is not used to vouch for {}.	Certyfikat podmiotu {} ma rozszerzenia krytyczne, których PdfCraft nie rozpoznaje, dlatego nie poświadcza certyfikatu {}.
+	The certificate of {} has critical extensions Loom does not recognize, so it is not used to vouch for {}.	Certyfikat podmiotu {} ma rozszerzenia krytyczne, których Loom nie rozpoznaje, dlatego nie poświadcza certyfikatu {}.
 	The certificate of {} does not allow this many CA certificates below it (path length), so it is not used to vouch for {}.	Certyfikat podmiotu {} nie dopuszcza tylu certyfikatów urzędów certyfikacji poniżej siebie (długość ścieżki), dlatego nie poświadcza certyfikatu {}.
 	The certificate of {} was not valid at the time of signing, so it is not used to vouch for {}.	Certyfikat podmiotu {} nie był ważny w chwili podpisania, dlatego nie poświadcza certyfikatu {}.
 	The signer's identity is unknown because it has not been included in your list of trusted certificates and none of its parent certificates are trusted certificates.	Tożsamość podpisującego jest nieznana, ponieważ jego certyfikatu nie ma na liście zaufanych certyfikatów i żaden z certyfikatów nadrzędnych nie jest zaufany.

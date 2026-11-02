@@ -18,7 +18,7 @@ use crate::page_cursor::Layer;
 use crate::page_router::{Hit, Owner};
 use crate::theme::Tokens;
 
-const FOCUS_BLUE: Color32 = Color32::from_rgb(0x14, 0x73, 0xE6);
+const FOCUS_BLUE: Color32 = Color32::from_rgb(0xD9, 0x47, 0x12);
 /// Background of the in-place text field editor, the same in every theme.
 const FIELD_FILL: Color32 = Color32::from_rgb(0xFF, 0xFF, 0xF4);
 

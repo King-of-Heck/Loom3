@@ -52,7 +52,7 @@ pub use state::{CommentView, Composer, ComposerKind, Gesture, SortBy};
 pub(crate) use state::{EditorFocus, PageCx};
 
 /// Acrobat's selection blue for annotation frames and handles (11-visual-spec §5).
-const SELECT_BLUE: Color32 = Color32::from_rgb(0x14, 0x73, 0xE6);
+const SELECT_BLUE: Color32 = Color32::from_rgb(0xD9, 0x47, 0x12);
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub enum CommentTool {

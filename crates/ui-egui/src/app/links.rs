@@ -105,9 +105,9 @@ impl PdfCraftApp {
             Err(e) => {
                 use pdfcraft_engine::links::BlockedLink;
                 let template = if matches!(e, BlockedLink::MailFile | BlockedLink::MailEncodedWord) {
-                    "{who} in this document tried to open an address PdfCraft won't open: {e}."
+                    "{who} in this document tried to open an address Loom won't open: {e}."
                 } else {
-                    "{who} in this document tried to open an address PdfCraft won't open: {e}. Only web (http, https) and email (mailto) links open from documents."
+                    "{who} in this document tried to open an address Loom won't open: {e}. Only web (http, https) and email (mailto) links open from documents."
                 };
                 self.notify_fmt(template, &[("who", tl!(origin.noun())), ("e", &e.to_string())]);
             }

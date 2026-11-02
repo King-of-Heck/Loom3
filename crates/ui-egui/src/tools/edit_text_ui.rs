@@ -32,7 +32,7 @@ use layout::{DARK_EDITOR_FILL, contrast};
 pub(crate) use layout::{caret_color_on, editor_fill, editor_font, install_source_fonts};
 use layout::{color32, editor_galley, editor_job, look_of, luminance, source_look, unseen};
 
-const ACCENT: Color32 = Color32::from_rgb(0x14, 0x73, 0xE6);
+const ACCENT: Color32 = Color32::from_rgb(0xD9, 0x47, 0x12);
 
 #[derive(Clone, Copy, PartialEq)]
 enum TextTarget {

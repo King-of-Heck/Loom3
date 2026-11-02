@@ -23,7 +23,7 @@ pub(crate) fn banner(sigs: &[SignatureInfo]) -> Option<(&'static str, Color32, &
             };
             crate::i18n::fmt(tl!(template), &[("who", &who), ("issuer", issuer)])
         });
-        return Some(("badge-check", Color32::from_rgb(0x14, 0x73, 0xE6), "Certified by {by}", by.unwrap_or_default()));
+        return Some(("badge-check", Color32::from_rgb(0xD9, 0x47, 0x12), "Certified by {by}", by.unwrap_or_default()));
     }
     Some(if signed.iter().any(|s| s.status == SignatureStatus::Invalid) {
         ("circle-x", Color32::from_rgb(0xD7, 0x37, 0x3F), "At least one signature is invalid.", String::new())

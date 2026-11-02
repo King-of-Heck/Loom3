@@ -25,7 +25,7 @@ pub use draft::{ACTION_KINDS, ActionDraft, FieldDraft, FieldTab};
 pub(crate) use draft::{da_font, da_size};
 pub(crate) use properties::body;
 
-const SELECT_BLUE: Color32 = Color32::from_rgb(0x14, 0x73, 0xE6);
+const SELECT_BLUE: Color32 = Color32::from_rgb(0xD9, 0x47, 0x12);
 /// Acrobat's field fill in Prepare Form (light blue).
 pub(crate) const FIELD_FILL: Color32 = Color32::from_rgba_premultiplied(0x1B, 0x34, 0x54, 0x59);
 

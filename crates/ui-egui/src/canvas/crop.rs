@@ -62,7 +62,7 @@ pub(crate) fn page_input(ui: &egui::Ui, input: CropPageInput<'_>) -> bool {
         ] {
             painter.rect_filled(band, CornerRadius::ZERO, Color32::from_black_alpha(70));
         }
-        painter.rect_stroke(r, CornerRadius::ZERO, Stroke::new(1.0, Color32::from_rgb(0x14, 0x73, 0xE6)), egui::StrokeKind::Middle);
+        painter.rect_stroke(r, CornerRadius::ZERO, Stroke::new(1.0, Color32::from_rgb(0xD9, 0x47, 0x12)), egui::StrokeKind::Middle);
         if resp.drag_stopped() || !ptr.primary_down {
             view.crop_drag = None;
             if r.width() >= 4.0 && r.height() >= 4.0 {

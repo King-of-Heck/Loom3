@@ -172,7 +172,7 @@ mod tests {
     #[test]
     fn portable_and_non_xdg_platforms_keep_their_locations() {
         let f = Fixture::new();
-        let portable = f.0.join("PdfCraftData");
+        let portable = f.0.join("LoomData");
         for xdg in [true, false] {
             assert_eq!(directory(xdg, Some(&portable), Some(f.0.clone()), Some(f.0.clone()), None).unwrap(), Some(portable.clone()));
         }

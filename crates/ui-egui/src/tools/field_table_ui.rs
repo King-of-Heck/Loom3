@@ -18,7 +18,7 @@ use pdfcraft_render::PageInfo;
 use crate::canvas::PageXform;
 use crate::{Dialog, PdfCraftApp, i18n, theme, widgets};
 
-const SELECT_BLUE: Color32 = Color32::from_rgb(0x14, 0x73, 0xE6);
+const SELECT_BLUE: Color32 = Color32::from_rgb(0xD9, 0x47, 0x12);
 const ERROR_RED: Color32 = Color32::from_rgb(0xD1, 0x3B, 0x3B);
 /// A divider can't be dragged to leave a column less than this share of the table, or less than a
 /// quarter of what the two columns it divides have between them when that is smaller.

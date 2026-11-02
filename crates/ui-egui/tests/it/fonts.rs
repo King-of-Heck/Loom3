@@ -155,7 +155,7 @@ fn system_fallback_fills_missing_scripts() {
     let mut fonts = Fonts::new(TextOptions::default(), defs);
     for id in families() {
         assert!(fonts.has_glyphs(&id, ARABIC), "{id:?} lacks {ARABIC}");
-        assert!(fonts.has_glyphs(&id, "PdfCraft"), "{id:?}");
+        assert!(fonts.has_glyphs(&id, "Loom"), "{id:?}");
     }
     assert!(layout_widths(&mut fonts, ARABIC).iter().all(|w| w.is_finite() && *w > 0.0));
 }
@@ -359,11 +359,11 @@ fn non_chinese_ui_keeps_the_installed_face_last() {
 fn ui_fonts_work_without_craft_fonts() {
     let mut fonts = Fonts::new(TextOptions::default(), theme::font_definitions());
     for id in families() {
-        assert!(fonts.has_glyphs(&id, "PdfCraft"), "{id:?}");
+        assert!(fonts.has_glyphs(&id, "Loom"), "{id:?}");
         assert_eq!(fonts.has_glyphs(&id, JAPANESE), !pdfcraft_fonts::ui_japanese_fonts().is_empty(), "{id:?}");
     }
     assert!(layout_widths(&mut fonts, JAPANESE).iter().all(|w| w.is_finite() && *w > 0.0));
-    assert!(layout_widths(&mut fonts, "PdfCraft").iter().all(|w| *w > 20.0));
+    assert!(layout_widths(&mut fonts, "Loom").iter().all(|w| *w > 20.0));
     let ctx = egui::Context::default();
     theme::install_fonts(&ctx);
 }

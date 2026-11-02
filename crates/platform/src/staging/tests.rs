@@ -127,7 +127,7 @@ fn atomic_saves_keep_finder_tags_and_binary_extended_attributes() {
     let dir = test_dir("xattrs");
     let target = dir.join("out.pdf");
     let attributes: &[(&str, &[u8])] = &[
-        ("com.apple.metadata:_kMDItemUserTags", b"<plist version=\"1.0\"><array><string>PdfCraft\n6</string></array></plist>"),
+        ("com.apple.metadata:_kMDItemUserTags", b"<plist version=\"1.0\"><array><string>Loom\n6</string></array></plist>"),
         ("com.pdfcraft.test.binary", b"\0\xff\x80original\0"),
         ("com.pdfcraft.test.empty", b""),
     ];

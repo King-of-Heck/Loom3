@@ -43,7 +43,7 @@ fn compositor_leaves_frame_to_app() -> bool {
     let Ok((globals, _queue)) = registry_queue_init::<Registry>(&conn) else { return false };
     let offered = globals.contents().with_list(|list| list.iter().any(|g| g.interface == "zxdg_decoration_manager_v1"));
     if !offered {
-        log::info!("the Wayland compositor draws no window frames; PdfCraft draws its own title bar");
+        log::info!("the Wayland compositor draws no window frames; Loom draws its own title bar");
     }
     !offered
 }

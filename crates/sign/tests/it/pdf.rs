@@ -580,7 +580,7 @@ fn tsa_id() -> DigitalId {
 /// [`tsa_id`] with these extended key usages.
 fn tsa_id_with(ekus: &[&str]) -> DigitalId {
     let key = pdfcraft_sign::PrivateKey::generate_p256().unwrap();
-    let name = Name::build("Test TSA", "", "PdfCraft Tests", "", "US");
+    let name = Name::build("Test TSA", "", "Loom Tests", "", "US");
     let alg = key.preferred_digest();
     let sig_alg = key.signature_algorithm(alg);
     let from = Time { year: 2026, month: 10, day: 2, hour: 0, minute: 0, second: 0 };
@@ -1761,7 +1761,7 @@ fn fixture_with_info() -> Vec<u8> {
         b"<< /Length 44 >>\nstream\nBT /F1 14 Tf 20 250 Td (Contract text) Tj ET\nendstream",
         b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
         b"<< /Type /Annot /Subtype /Widget /FT /Sig /T (Approval) /Rect [150 20 280 70] /P 3 0 R /F 4 >>",
-        b"<< /Producer (PdfCraft) /CreationDate (D:20260101000000Z) >>",
+        b"<< /Producer (Loom) /CreationDate (D:20260101000000Z) >>",
     ];
     let mut out = b"%PDF-1.7\n".to_vec();
     let mut offsets = Vec::new();
@@ -2011,7 +2011,7 @@ fn signing_with_windows_store_identities() {
     getrandom::fill(&mut random).unwrap();
     let unique: String = random.iter().map(|b| format!("{b:02x}")).collect();
     for algorithm in ["RSA", "ECDSA_nistP256", "ECDSA_nistP384"] {
-        let name = format!("PdfCraft Test {unique} {algorithm}");
+        let name = format!("Loom Test {unique} {algorithm}");
         let rsa = if algorithm == "RSA" { "-KeyLength 2048" } else { "" };
         let out = powershell(&format!(
             "$ErrorActionPreference='Stop'; $c=New-SelfSignedCertificate -Subject 'CN={name}' -CertStoreLocation 'Cert:\\CurrentUser\\My' -Provider 'Microsoft Software Key Storage Provider' -KeyAlgorithm {algorithm} {rsa} -KeyUsage DigitalSignature -KeyExportPolicy NonExportable; $c.Thumbprint"
@@ -2072,7 +2072,7 @@ fn a_windows_store_identity_signs_with_its_issuers() {
     let mut random = [0u8; 16];
     getrandom::fill(&mut random).unwrap();
     let unique: String = random.iter().map(|b| format!("{b:02x}")).collect();
-    let [root, issuer, signer] = ["Root", "Issuer", "Signer"].map(|role| format!("PdfCraft Test {unique} {role}"));
+    let [root, issuer, signer] = ["Root", "Issuer", "Signer"].map(|role| format!("Loom Test {unique} {role}"));
     let mut create = |name: &str, signed_by: Option<&str>, extra: &str| {
         let by = signed_by.map(|t| format!("-Signer (Get-Item -LiteralPath 'Cert:\\CurrentUser\\My\\{t}')")).unwrap_or_default();
         let out = powershell(&format!(

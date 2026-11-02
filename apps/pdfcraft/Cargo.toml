@@ -1,9 +1,13 @@
 [package]
 name = "pdfcraft"
-description = "PdfCraft desktop app"
+description = "Loom desktop app (based on PdfCraft)"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+
+[[bin]]
+name = "loom"
+path = "src/main.rs"
 
 [lints]
 workspace = true

@@ -173,9 +173,9 @@ impl RecoveryStore {
         }
         let env = |k: &str| std::env::var_os(k).filter(|v| !v.is_empty()).map(PathBuf::from);
         if cfg!(target_os = "macos") {
-            env("HOME").map(|h| h.join("Library/Application Support/PdfCraft/Recovery"))
+            env("HOME").map(|h| h.join("Library/Application Support/Loom/Recovery"))
         } else if cfg!(windows) {
-            env("LOCALAPPDATA").map(|d| d.join("PdfCraft").join("Recovery"))
+            env("LOCALAPPDATA").map(|d| d.join("Loom3").join("Recovery"))
         } else {
             env("XDG_DATA_HOME").or_else(|| env("HOME").map(|h| h.join(".local/share"))).map(|d| d.join("pdfcraft/recovery"))
         }

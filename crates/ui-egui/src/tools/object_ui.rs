@@ -11,7 +11,7 @@ use crate::canvas::{DocView, PageToolContext, PageXform};
 use crate::page_cursor::Layer;
 use crate::page_router::{Hit, ObjectsPart, Owner};
 
-const BLUE: Color32 = Color32::from_rgb(0x14, 0x73, 0xE6);
+const BLUE: Color32 = Color32::from_rgb(0xD9, 0x47, 0x12);
 
 #[derive(Default)]
 pub(crate) struct ObjectSelection {

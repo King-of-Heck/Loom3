@@ -639,7 +639,7 @@ fn dragged_text_leaves_what_it_covered_behind() {
         let (x0, y0, x1, y1) = (r.left().max(0.0) as u32, r.top().max(0.0) as u32, r.right() as u32, r.bottom() as u32);
         (y0..y1.min(pixels.height()))
             .flat_map(|y| (x0..x1.min(pixels.width())).map(move |x| (x, y)))
-            .filter(|(x, y)| matches!(pixels.get_pixel(*x, *y).0, [r, g, b, _] if r > 200 && g < 80 && b < 80))
+            .filter(|(x, y)| matches!(pixels.get_pixel(*x, *y).0, [r, g, b, _] if r > 200 && g < 50 && b < 80))
             .count()
     };
     let (old, new) = ink_at(&mut h, from, to);
@@ -918,7 +918,7 @@ fn red(pixels: &image::RgbaImage, r: egui::Rect) -> usize {
     let (x0, y0, x1, y1) = (r.left().max(0.0) as u32, r.top().max(0.0) as u32, r.right() as u32, r.bottom() as u32);
     (y0..y1.min(pixels.height()))
         .flat_map(|y| (x0..x1.min(pixels.width())).map(move |x| (x, y)))
-        .filter(|(x, y)| matches!(pixels.get_pixel(*x, *y).0, [r, g, b, _] if r > 150 && g < 90 && b < 90))
+        .filter(|(x, y)| matches!(pixels.get_pixel(*x, *y).0, [r, g, b, _] if r > 150 && g < 50 && b < 90))
         .count()
 }
 

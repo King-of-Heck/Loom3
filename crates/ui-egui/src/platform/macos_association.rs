@@ -337,7 +337,7 @@ mod tests {
     #[test]
     fn untrusted_bundle_aliases_are_skipped_without_resolving_them() {
         let dir = directory();
-        let app = dir.join("PdfCraft.app");
+        let app = dir.join("Loom.app");
         std::fs::create_dir(&app).unwrap();
         let alias = dir.join("alias.app");
         std::os::unix::fs::symlink(&app, &alias).unwrap();
@@ -353,7 +353,7 @@ mod tests {
         let hex = "62706c6973743030d30102030405065776657273696f6e54706174685f101062756e646c656964656e74696669657210005f101a2f4170706c69636174696f6e732f50646643726166742e6170705f101761692e73746f727974656c6c65722e7064666372616674080f171c2f314e0000000000000101000000000000000700000000000000000000000000000068";
         let captured: Vec<u8> =
             hex.as_bytes().as_chunks::<2>().0.iter().map(|pair| u8::from_str_radix(std::str::from_utf8(pair).unwrap(), 16).unwrap()).collect();
-        assert!(points_to_this_app(&captured, Path::new("/Applications/PdfCraft.app")));
+        assert!(points_to_this_app(&captured, Path::new("/Applications/Loom.app")));
         let package = plist::from_bytes::<plist::Value>(include_bytes!("../../../../packaging/macos/Info.plist.in")).unwrap();
         assert_eq!(package.as_dictionary().unwrap().get("CFBundleIdentifier").unwrap().as_string(), Some(BUNDLE_ID));
     }
@@ -361,7 +361,7 @@ mod tests {
     /// Exercise arbitrary and damaged metadata through the strict native parser.
     #[test]
     fn malformed_plists_and_truncated_native_schemas_do_not_panic() {
-        let app = Path::new("/Applications/PdfCraft.app");
+        let app = Path::new("/Applications/Loom.app");
         for binary in [false, true] {
             let native = binding(app, BUNDLE_ID, 0, binary);
             for end in 0..native.len() {

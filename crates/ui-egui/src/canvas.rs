@@ -2169,7 +2169,7 @@ fn page_overlays(ui: &mut egui::Ui, view: &mut DocView, frame: &mut PageFrame<'_
             painter.rect_stroke(
                 sr,
                 CornerRadius::same(3),
-                Stroke::new(2.5, Color32::from_rgba_unmultiplied(0x1B, 0x63, 0xE0, a)),
+                Stroke::new(2.5, Color32::from_rgba_unmultiplied(0xD9, 0x47, 0x12, a)),
                 egui::StrokeKind::Outside,
             );
             ui.ctx().request_repaint();

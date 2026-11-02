@@ -110,7 +110,7 @@ fn double_clicking_another_attachment_saves_it() {
     let mut h = harness();
     h.state_mut().pick_override = Some(vec![target.to_string_lossy().into_owned()]);
     double_click(&mut h, "notes.txt");
-    assert_eq!(std::fs::read(&target).unwrap(), b"hello notes", "PdfCraft opens only PDFs, so it saves the rest");
+    assert_eq!(std::fs::read(&target).unwrap(), b"hello notes", "Loom opens only PDFs, so it saves the rest");
     assert_eq!(h.state().views.len(), 1, "nothing opens");
 }
 

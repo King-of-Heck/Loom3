@@ -816,7 +816,7 @@ fn has_blue_near(pixels: &image::RgbaImage, p: Pos2) -> bool {
     (-5..=5).any(|dy| {
         (-5..=5).any(|dx| {
             let v = pixels.get_pixel((p.x as i32 + dx) as u32, (p.y as i32 + dy) as u32).0;
-            i32::from(v[2]) > i32::from(v[0]) + 40 && i32::from(v[2]) > i32::from(v[1]) + 35
+            i32::from(v[0]) > i32::from(v[2]) + 40 && i32::from(v[0]) > i32::from(v[1]) + 35
         })
     })
 }

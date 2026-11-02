@@ -23,7 +23,7 @@ use pdfcraft_engine::form_scripts::{CalcOp, Calculate, format_value};
 use pdfcraft_engine::{CalculatedField, CalculationIssue, CalculationOrder, Edit, FormField, FormFieldKind};
 
 /// Links and steps on the page, which is paper white in either theme.
-const LINK_OK: Color32 = Color32::from_rgb(0x1B, 0x63, 0xE0);
+const LINK_OK: Color32 = Color32::from_rgb(0xD9, 0x47, 0x12);
 const LINK_LATE: Color32 = Color32::from_rgb(0xA8, 0x64, 0x00);
 const LINK_LOOP: Color32 = Color32::from_rgb(0xC2, 0x26, 0x2E);
 const STEP: Color32 = Color32::from_rgb(0x3A, 0x3A, 0x42);

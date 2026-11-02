@@ -15,7 +15,7 @@ fn tmp(test: &str, name: &str) -> PathBuf {
 /// A one-page PDF with some text, as `--out` would be given it.
 fn fixture(test: &str) -> PathBuf {
     let pdf = tmp(test, "in.pdf");
-    let bytes = pdfcraft_engine::Session::new().create_from_text("Render test", "Hello from PdfCraft").unwrap();
+    let bytes = pdfcraft_engine::Session::new().create_from_text("Render test", "Hello from Loom").unwrap();
     std::fs::write(&pdf, bytes.as_slice()).unwrap();
     pdf
 }
