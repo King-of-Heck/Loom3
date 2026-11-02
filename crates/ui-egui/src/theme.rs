@@ -461,12 +461,12 @@ pub fn apply(ctx: &egui::Context, kind: ThemeKind) {
     // Stock buttons (menus, dialogs) use the same pointing hand as the custom chrome.
     v.interact_cursor = Some(egui::CursorIcon::PointingHand);
     v.widgets.open.weak_bg_fill = t.hover;
-    // Crisper text at 100–150 % scaling (#76): glyphs sit on whole pixels instead of being
-    // rendered at quarter-pixel offsets, which egui notes blurs them. In the light theme, a mild
+    // Even letter spacing at 100–150 % scaling: glyphs sit at quarter-pixel offsets rather than on
+    // whole pixels, a little softer but without uneven gaps. In the light theme, a mild
     // gamma darkens the antialiased edges of dark text (egui's default is linear, which reads thin
     // and grey next to the system's text); the dark theme keeps egui's own curve. At 200 % both
     // make little difference.
-    v.text_options.subpixel_binning = false;
+    v.text_options.subpixel_binning = true;
     if !t.dark() {
         v.text_options.color_transfer_function = egui::epaint::FontColorTransferFunction::Gamma(0.75);
     }
