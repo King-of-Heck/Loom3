@@ -233,8 +233,15 @@ fn main() -> eframe::Result {
     let may_hand_off = startup.may_hand_off();
     let startup::Arguments { files, options, control_file, create_images, two_paged, .. } = startup;
     let integrated = cfg!(target_os = "macos");
-    // GNOME on Wayland leaves the window frame to the app (src/decorations.rs).
-    let window_controls = if cfg!(any(target_os = "macos", target_os = "windows")) { None } else { decorations::app_drawn() };
+    // GNOME on Wayland leaves the window frame to the app (src/decorations.rs). Loom draws its own
+    // on Windows too, so the tab strip is the title bar; PDFCRAFT_TITLEBAR=system keeps Windows' frame.
+    let window_controls = if cfg!(target_os = "macos") {
+        None
+    } else if cfg!(target_os = "windows") {
+        (std::env::var("PDFCRAFT_TITLEBAR").ok().as_deref().map(str::trim) != Some("system")).then(Default::default)
+    } else {
+        decorations::app_drawn()
+    };
     migrate_legacy_folders();
     // The log file stays in the data folder; opened after the arguments (so `--version` leaves
     // no file behind) and after the PrintCraft migration (which a fresh folder would block).
