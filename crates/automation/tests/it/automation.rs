@@ -656,7 +656,7 @@ fn tool_table_is_well_formed() {
         }
         assert!(!(t.read_only && t.destructive), "{} is both read-only and destructive", t.name);
         for k in ["oneOf", "anyOf", "allOf"] {
-            assert!(t.input_schema.get(k).is_none(), "{}: top-level {k} in input_schema is rejected by MCP clients such as Claude", t.name);
+            assert!(t.input_schema.get(k).is_none(), "{}: top-level {k} in input_schema is rejected by MCP clients", t.name);
         }
         if let Some(c) = t.command {
             assert!(pdfcraft_engine::commands::command(c).is_some(), "{} names unregistered command {c}", t.name);

@@ -30,13 +30,7 @@ Cargo's `install.root`, use that installation root's `bin` directory instead. Ad
 to the `PATH` inherited by the MCP client, not just an interactive shell, and restart
 the client after changing its environment.
 
-Register the installed command explicitly (replace `/work/project` with an existing folder):
-
-```sh
-claude mcp add pdfcraft -- pdfcraft-cli mcp --root /work/project
-```
-
-Other MCP clients can use this bare-name configuration:
+Register the installed command with your MCP client (replace `/work/project` with an existing folder):
 
 ```json
 {"mcpServers":{"pdfcraft":{"command":"pdfcraft-cli","args":["mcp","--root","/work/project"]}}}

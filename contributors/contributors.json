@@ -1284,15 +1284,6 @@
   ],
   "models": [
     {
-      "id": "anthropic/claude-opus/5.5",
-      "company": "Anthropic",
-      "model": "Claude Opus",
-      "version": "5.5",
-      "commits": 452,
-      "lines_added": 320722,
-      "lines_deleted": 18683
-    },
-    {
       "id": "openai/codex",
       "company": "OpenAI",
       "model": "Codex",
@@ -1300,69 +1291,6 @@
       "commits": 52,
       "lines_added": 28322,
       "lines_deleted": 3099
-    },
-    {
-      "id": "anthropic/claude-fable/5.1",
-      "company": "Anthropic",
-      "model": "Claude Fable",
-      "version": "5.1",
-      "commits": 13,
-      "lines_added": 1525,
-      "lines_deleted": 217
-    },
-    {
-      "id": "anthropic/claude-opus/5",
-      "company": "Anthropic",
-      "model": "Claude Opus",
-      "version": "5",
-      "commits": 10,
-      "lines_added": 4163,
-      "lines_deleted": 230
-    },
-    {
-      "id": "anthropic/claude-sonnet/5.5",
-      "company": "Anthropic",
-      "model": "Claude Sonnet",
-      "version": "5.5",
-      "commits": 7,
-      "lines_added": 3556,
-      "lines_deleted": 158
-    },
-    {
-      "id": "anthropic/claude-haiku/5.5",
-      "company": "Anthropic",
-      "model": "Claude Haiku",
-      "version": "5.5",
-      "commits": 6,
-      "lines_added": 1813,
-      "lines_deleted": 179
-    },
-    {
-      "id": "anthropic/claude",
-      "company": "Anthropic",
-      "model": "Claude",
-      "version": "",
-      "commits": 2,
-      "lines_added": 489,
-      "lines_deleted": 23
-    },
-    {
-      "id": "anthropic/claude-opus/4.8",
-      "company": "Anthropic",
-      "model": "Claude Opus",
-      "version": "4.8",
-      "commits": 2,
-      "lines_added": 1708,
-      "lines_deleted": 5
-    },
-    {
-      "id": "anthropic/claude-sonnet/5",
-      "company": "Anthropic",
-      "model": "Claude Sonnet",
-      "version": "5",
-      "commits": 1,
-      "lines_added": 55,
-      "lines_deleted": 3
     },
     {
       "id": "anysphere/cursor",

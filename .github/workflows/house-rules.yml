@@ -5,12 +5,10 @@ on:
     branches: [main]
     paths:
       - AGENTS.md
-      - CLAUDE.md
       - .github/workflows/house-rules.yml
   pull_request:
     paths:
       - AGENTS.md
-      - CLAUDE.md
       - .github/workflows/house-rules.yml
   workflow_dispatch:
 

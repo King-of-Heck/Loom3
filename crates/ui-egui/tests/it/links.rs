@@ -75,5 +75,5 @@ fn about_dialog_has_contributors_and_models_tabs() {
     settled(&mut h, "Brandon Thomas");
     settled(&mut h, "Models").click();
     h.run_steps(4);
-    assert!(h.query_all_by_label("Anthropic").count() >= 1);
+    assert!(h.query_all_by_label("OpenAI").count() >= 1);
 }

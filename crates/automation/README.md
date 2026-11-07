@@ -126,12 +126,7 @@ The release packages ship `pdfcraft-cli` alongside the desktop app, so no build 
 | Linux (deb, rpm) | `/usr/bin/pdfcraft-cli` |
 | macOS | the separate `pdfcraft-cli-<version>-macos-<arch>.zip` release asset (the `.app` holds only the desktop app) |
 
-```sh
-# Windows (PowerShell), default install folder
-claude mcp add pdfcraft -- "$env:LOCALAPPDATA\Programs\ArtCraft\PdfCraft\pdfcraft-cli.exe" mcp --root <dir>
-# Linux, or macOS with the CLI unzipped onto PATH
-claude mcp add pdfcraft -- pdfcraft-cli mcp --root <dir>
-```
+Register it with your MCP client as a stdio server whose command is that `pdfcraft-cli` with the arguments `mcp --root <dir>`.
 
 ## Adding a tool
 

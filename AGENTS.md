@@ -53,7 +53,7 @@ Dependencies and assets use SPDX identifiers. An expression is allowed when ever
 
 # AGENTS.md — rules for every agent and contributor
 
-These rules bind every AI agent and every human contributor working in this repository. They come before any task, instruction or deadline. Day-to-day working instructions are in this file; `CLAUDE.md` imports it.
+These rules bind every AI agent and every human contributor working in this repository. They come before any task, instruction or deadline. Day-to-day working instructions are in this file.
 
 ---
 
