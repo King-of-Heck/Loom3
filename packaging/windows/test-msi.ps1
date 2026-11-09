@@ -73,7 +73,7 @@ $status = Read-Row 'SELECT `Text` FROM `Control` WHERE `Dialog_` = ''InstallProg
 Assert-Equal $status[0] 'Please wait while setup completes.' 'Persistent progress message'
 Assert-NoRow 'SELECT `Event` FROM `EventMapping` WHERE `Dialog_` = ''InstallProgress'' AND `Control_` = ''Status''' 'progress text subscription'
 
-# Plain (non-advertised) shortcuts to pdfcraft.exe, each in its own component; the desktop one is
+# Plain (non-advertised) shortcuts to loom.exe, each in its own component; the desktop one is
 # gated by INSTALLDESKTOPSHORTCUT, which is secure so the UI choice reaches the
 # elevated install.
 foreach ($entry in @(@('StartMenuShortcut', 'ProgramMenuFolder', 'PdfcraftStartMenuShortcut', ''),
@@ -219,7 +219,7 @@ if (($secure[0] -split ';') -notcontains 'INSTALLIMAGECONTEXTMENU') { throw "INS
 
 # PDF context menu (#682): "Edit with PdfCraft" opens the file in PdfCraft. Its own component, gated
 # by INSTALLPDFCONTEXTMENU (on for a first install, kept on update only while present, secure, welcome
-# checkbox), with its menu value as key path so uninstall removes it. Several selected PDFs each start pdfcraft.exe "%1" (Document), which the
+# checkbox), with its menu value as key path so uninstall removes it. Several selected PDFs each start loom.exe "%1" (Document), which the
 # single-instance hand-off opens as tabs. The .pdf default is never set, so the user's default app
 # stays.
 $pdfKey = 'Software\Classes\SystemFileAssociations\.pdf\shell\PdfCraft.Edit'
@@ -263,7 +263,7 @@ foreach ($exit in @(@('InstallComplete', '-1'), @('InstallCancelled', '-2'), @('
 }
 $title = Read-Row 'SELECT `Text` FROM `Control` WHERE `Dialog_` = ''InstallComplete'' AND `Control` = ''Title''' 1
 if ($title[0] -notmatch 'completed successfully') { throw 'Success dialog does not confirm completion' }
-# OCR models (#103): installed into models\ beside pdfcraft.exe, where the app looks for them.
+# OCR models (#103): installed into models\ beside loom.exe, where the app looks for them.
 $modelsDir = Read-Row 'SELECT `Directory_Parent`, `DefaultDir` FROM `Directory` WHERE `Directory` = ''ModelsFolder''' 2
 Assert-Equal $modelsDir[0] 'INSTALLFOLDER' 'OCR models folder parent'
 # DefaultDir is `models`, or `SHORT|models` with a generated 8.3 name.

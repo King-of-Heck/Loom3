@@ -44,7 +44,7 @@ mkdir -p "$DIR/hicolor/scalable/apps"
 cp "$SVG" "$DIR/hicolor/scalable/apps/$ID.svg"
 
 # Windows .ico: PNG-compressed entries, 16-256 px. The document icon has its own resource
-# in pdfcraft.exe; the app icon remains the first/default icon.
+# in loom.exe; the app icon remains the first/default icon.
 for name in pdfcraft pdfcraft-document; do
   ICO_PNGS=()
   for s in 16 20 24 32 40 48 64 128 256; do

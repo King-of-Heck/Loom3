@@ -1,6 +1,6 @@
 PdfCraft portable mode
 
-While this file sits next to pdfcraft.exe, PdfCraft keeps its settings, log files, crash-recovery
+While this file sits next to loom.exe, PdfCraft keeps its settings, log files, crash-recovery
 autosaves and new digital IDs in the PdfCraftData folder beside it, and writes nothing to
 %APPDATA% or %LOCALAPPDATA%. Copy the whole folder to move PdfCraft with its settings.
 

@@ -31,6 +31,7 @@ jobs:
     uses: storytold/craft-common-actions/.github/workflows/windows-arm64.yml@main
     with:
       app-name: pdfcraft
+      main-binary: loom.exe
       app-dir: PdfCraft
       install-relative-path: Programs/ArtCraft/PdfCraft
       install-scope: perUser

@@ -15,7 +15,7 @@ id: ai.storyteller.pdfcraft
 runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
-command: pdfcraft
+command: loom
 finish-args:
   - --filesystem=xdg-data/ArtCraft/versions:ro
   # Display: Wayland first; X11 only when no Wayland compositor is running.
@@ -105,7 +105,7 @@ modules:
       env:
         CRAFT_I18N_DIR: /run/build/pdfcraft/craft-i18n
     build-commands:
-      - install -Dm755 bin/pdfcraft /app/bin/pdfcraft
+      - install -Dm755 bin/loom /app/bin/loom
       - install -Dm755 bin/pdfcraft-cli /app/bin/pdfcraft-cli
       - install -Dm644 share/applications/ai.storyteller.pdfcraft.desktop /app/share/applications/ai.storyteller.pdfcraft.desktop
       - install -Dm644 share/mime/packages/ai.storyteller.pdfcraft.xml /app/share/mime/packages/ai.storyteller.pdfcraft.xml

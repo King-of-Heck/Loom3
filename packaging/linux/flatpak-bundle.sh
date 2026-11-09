@@ -51,7 +51,7 @@ WORK="$CARGO_TARGET_DIR/flatpak-bundle"
 rm -rf "$WORK"
 mkdir -p "$WORK/stage"
 tar -xzf "$TARBALL" -C "$WORK/stage" --strip-components=1
-[[ -x "$WORK/stage/bin/pdfcraft" ]] || { echo "error: $TARBALL has no bin/pdfcraft" >&2; exit 1; }
+[[ -x "$WORK/stage/bin/loom" ]] || { echo "error: $TARBALL has no bin/loom" >&2; exit 1; }
 cp "$HERE/flatpak/$APP_ID.bundle.yml" "$WORK/$APP_ID.yml"
 
 flatpak remote-add --user --if-not-exists flathub "$FLATHUB"

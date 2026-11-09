@@ -15,12 +15,12 @@
     "LICENSE-document.txt",
     "NOTICE",
     "pdfcraft-cli.exe",
-    "pdfcraft.exe"
+    "loom.exe"
   ],
   "registry": [
     [
       "-1",
-      "Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\pdfcraft.exe",
+      "Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\loom.exe",
       "",
       "[#PdfcraftExe]"
     ],
@@ -56,25 +56,25 @@
     ],
     [
       "-1",
-      "Software\\Classes\\Applications\\pdfcraft.exe",
+      "Software\\Classes\\Applications\\loom.exe",
       "FriendlyAppName",
       "PdfCraft"
     ],
     [
       "-1",
-      "Software\\Classes\\Applications\\pdfcraft.exe\\DefaultIcon",
+      "Software\\Classes\\Applications\\loom.exe\\DefaultIcon",
       "",
       "\"[#PdfcraftExe]\",-2"
     ],
     [
       "-1",
-      "Software\\Classes\\Applications\\pdfcraft.exe\\SupportedTypes",
+      "Software\\Classes\\Applications\\loom.exe\\SupportedTypes",
       ".pdf",
       ""
     ],
     [
       "-1",
-      "Software\\Classes\\Applications\\pdfcraft.exe\\shell\\open\\command",
+      "Software\\Classes\\Applications\\loom.exe\\shell\\open\\command",
       "",
       "\"[#PdfcraftExe]\" \"%1\""
     ],

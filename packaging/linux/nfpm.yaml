@@ -67,8 +67,8 @@ overrides:
       - xdg-desktop-portal
 
 contents:
-  - src: ${STAGE}/usr/bin/pdfcraft
-    dst: /usr/bin/pdfcraft
+  - src: ${STAGE}/usr/bin/loom
+    dst: /usr/bin/loom
     file_info: { mode: 0755 }
   - src: ${STAGE}/usr/bin/pdfcraft-cli
     dst: /usr/bin/pdfcraft-cli
