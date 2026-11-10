@@ -13,9 +13,9 @@ workspace = true
 [dependencies]
 pdfcraft-fonts = { workspace = true }
 ocrs = { version = "0.13.1", default-features = false, features = ["rten"] }
-rten = { version = "0.26.0", default-features = false, features = ["onnx_format", "rten_format"] }
+rten = { version = "0.27.0", default-features = false, features = ["onnx_format", "rten_format"] }
 # Word boxes, moved from a band to the page (already in the tree through ocrs).
-rten-imageproc = "0.26.0"
+rten-imageproc = "0.27.0"
 thiserror.workspace = true
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
